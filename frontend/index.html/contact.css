@@ -1,0 +1,41 @@
+/* ================== CONTACT SECTION ================== */
+.contact-section {
+    background: #1b1b1b;
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 6px 18px rgba(255,0,127,0.3);
+    max-width: 600px;
+    margin: 60px auto;
+    text-align: center;
+  }
+  
+  .contact-section h2 {
+    color: #00e5ff;
+    margin-bottom: 20px;
+  }
+  
+  .contact-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .contact-section input,
+  .contact-section textarea {
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #eee;
+    padding: 12px;
+  }
+  
+  .contact-section button {
+    background: linear-gradient(90deg, #ff007f, #00e5ff);
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  

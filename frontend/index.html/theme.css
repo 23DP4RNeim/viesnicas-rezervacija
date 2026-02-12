@@ -1,0 +1,24 @@
+/* ================== THEME TOGGLE ================== */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;  /* pārvietota uz apakšu, lai vienmēr redzama */
+  right: 20px;
+  background: rgba(0, 229, 255, 0.3);
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #fff;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 0, 127, 0.4);
+  transform: scale(1.1);
+}
+
+

@@ -1,0 +1,346 @@
+/* ================== GLOBAL ================== */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #111;
+  color: #eee;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 30px 50px;
+  flex-wrap: wrap;
+}
+
+.content {
+  flex: 2;
+  max-width: 700px;
+  text-align: center;
+}
+
+.main-title {
+  text-align: center;
+  padding: 20px;
+  font-size: 2rem;
+  color: #00e5ff;
+  transition: color 0.3s ease;
+}
+
+.hotel-image {
+  width: 100%;
+  max-width: 700px;
+  display: block;
+  margin: 20px auto 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(255,0,127,0.4);
+  transition: transform 0.3s ease;
+}
+
+.hotel-image:hover {
+  transform: scale(1.02);
+}
+
+aside {
+  flex: 1;
+  max-width: 300px;
+  background: #1b1b1b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,229,255,0.3);
+  color: #ccc;
+  margin-top: 40px;
+  transition: all 0.3s ease;
+}
+
+/* ================== CONTACT SECTION ================== */
+.contact-section {
+  background: #1b1b1b;
+  border-radius: 16px;
+  padding: 40px 30px;
+  box-shadow: 0 6px 18px rgba(255,0,127,0.3);
+  max-width: 600px;
+  margin: 60px auto;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.contact-section h2 {
+  color: #00e5ff;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+.contact-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-section label {
+  text-align: left;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.contact-section input,
+.contact-section textarea {
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #eee;
+  padding: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.contact-section input:focus,
+.contact-section textarea:focus {
+  border-color: #00e5ff;
+  box-shadow: 0 0 8px rgba(0,229,255,0.4);
+  outline: none;
+}
+
+.contact-section button {
+  background: linear-gradient(90deg, #ff007f, #00e5ff);
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-section button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 16px rgba(0,229,255,0.4);
+}
+
+/* ================== FOOTER ================== */
+footer {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(90deg, #ff007f, #00e5ff);
+  color: white;
+  margin-top: 30px;
+  transition: all 0.3s ease;
+}
+
+footer a {
+  color: #00e5ff;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: #fff;
+}
+
+/* ================== THEME TOGGLE ================== */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,229,255,0.2);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.theme-toggle:hover {
+  background: rgba(255,0,127,0.3);
+  transform: scale(1.1);
+}
+
+/* ================== RESPONSIVE GLOBAL ================== */
+@media (max-width: 1024px) {
+  main {
+    padding: 20px 30px;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 20px 10px;
+  }
+  
+  aside {
+    margin-top: 20px;
+    max-width: 100%;
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+
+/* ================== SEARCH SECTION (Meklēt numuriņu) ================== */
+.search-section {
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 50px auto 30px;
+padding: 20px 25px;
+background: #1b1b1b;
+border: 1px solid rgba(0,229,255,0.4);
+border-radius: 16px;
+box-shadow: 0 0 20px rgba(255,0,127,0.3);
+width: 80%;
+max-width: 600px;
+transition: all 0.3s ease;
+}
+
+.search-section input[type="text"] {
+width: 100%;
+padding: 14px 18px;
+border: 2px solid rgba(255,255,255,0.2);
+border-radius: 12px;
+background: #111;
+color: #eee;
+font-size: 1rem;
+outline: none;
+transition: all 0.3s ease;
+}
+
+.search-section input[type="text"]:focus {
+border-color: #00e5ff;
+box-shadow: 0 0 10px rgba(0,229,255,0.4);
+}
+
+#noResultsMessage {
+text-align: center;
+font-size: 1.1rem;
+font-weight: bold;
+color: #ff3d3d;
+margin-top: 20px;
+text-shadow: 0 0 6px rgba(255,0,0,0.5);
+}
+
+/* ================== MODAL (Pop-up Logi) ================== */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 2000; 
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7); 
+  backdrop-filter: blur(4px);
+  justify-content: center; 
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #1b1b1b;
+  margin: 10% auto; 
+  border: 2px solid rgba(0,229,255,0.4);
+  border-radius: 16px;
+  padding: 30px 40px;
+  max-width: 450px; 
+  width: 90%;
+  box-shadow: 0 0 25px rgba(255,0,127,0.4);
+  animation: fadeIn 0.4s ease;
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 32px;
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #ff007f;
+  text-decoration: none;
+  transform: rotate(90deg);
+}
+
+.modal-content h2 {
+  text-align: center;
+  color: #00e5ff;
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  color: #ddd;
+  margin: 10px 0 5px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #111;
+  color: #eee;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+  border-color: #00e5ff;
+  box-shadow: 0 0 8px rgba(0,229,255,0.4);
+}
+
+.modal-content button {
+  background: linear-gradient(90deg, #ff007f, #00e5ff);
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.modal-content button:hover {
+  background: linear-gradient(90deg, #00e5ff, #ff007f); 
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-50px); }
+  to { opacity: 1; transform: translateY(0); }
+}

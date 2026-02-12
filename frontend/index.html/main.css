@@ -1,0 +1,334 @@
+/* ================== GLOBAL ================== */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background: #111;
+  color: #eee;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ================== HEADER (NAV) ================== */
+/* ================== HEADER ================== */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(90deg, rgba(0,229,255,0.1), rgba(255,0,127,0.1));
+  border-bottom: 2px solid rgba(0,229,255,0.3);
+  box-shadow: 0 4px 15px rgba(0,229,255,0.2);
+  padding: 12px 30px;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0,229,255,0.5);
+}
+
+/* --- LINKS --- */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #ddd;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+  color: #00e5ff;
+  text-shadow: 0 0 6px rgba(0,229,255,0.6);
+}
+
+/* --- DROPDOWN --- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 35px;
+  background: #1a1a1a;
+  border: 1px solid rgba(0,229,255,0.3);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0,229,255,0.2);
+  min-width: 150px;
+  z-index: 10;
+}
+
+.dropdown-content a {
+  color: #eee;
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.dropdown-content a:hover {
+  background: rgba(0,229,255,0.1);
+  color: #00e5ff;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* --- RIGHT SIDE --- */
+.nav-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* --- Create Button --- */
+.create-btn {
+  background: #00e5ff;
+  border: none;
+  color: #111;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.create-btn:hover {
+  background: #ff4081;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* --- Search Bar --- */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: #1a1a1a;
+  border-radius: 6px;
+  padding: 3px 8px;
+  border: 1px solid rgba(0,229,255,0.2);
+}
+
+.search-bar input {
+  background: transparent;
+  border: none;
+  color: #eee;
+  padding: 6px;
+  outline: none;
+  width: 130px;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  color: #00e5ff;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* --- Hamburger --- */
+.menu-toggle {
+  display: none;
+  cursor: pointer;
+  color: #00e5ff;
+  font-size: 1.5rem;
+}
+
+/* ================== RESPONSIVE ================== */
+@media (max-width: 900px) {
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #111;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    display: none;
+    border-top: 2px solid rgba(0,229,255,0.3);
+    padding: 20px 0;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin: 10px 0;
+  }
+
+  .nav-right-actions {
+    gap: 10px;
+  }
+
+  .search-bar input {
+    width: 100px;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
+
+
+  
+  /* ================== LAYOUT ================== */
+  main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 30px 50px;
+    flex-wrap: wrap;
+  }
+  
+  .content {
+    flex: 2;
+    max-width: 700px;
+    text-align: center;
+  }
+  
+  .main-title {
+    text-align: center;
+    padding: 20px;
+    font-size: 2rem;
+    color: #00e5ff;
+    transition: color 0.3s ease;
+  }
+  
+  .hotel-image {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 20px auto 0 auto;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(255,0,127,0.4);
+    transition: transform 0.3s ease;
+  }
+  
+  .hotel-image:hover {
+    transform: scale(1.02);
+  }
+  
+  aside {
+    flex: 1;
+    max-width: 300px;
+    background: #1b1b1b;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,229,255,0.3);
+    color: #ccc;
+    margin-top: 40px;
+    transition: all 0.3s ease;
+  }
+  
+  /* ================== THEME TOGGLE ================== */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, rgba(0,229,255,0.3), rgba(255,0,127,0.3));
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: #fff;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0,229,255,0.4);
+  backdrop-filter: blur(8px);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 0 20px rgba(255,0,127,0.6);
+}
+
+/* ================== LIGHT MODE ================== */
+body.light-mode {
+  background: #f9f9f9;
+  color: #222;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+body.light-mode nav {
+  background: linear-gradient(90deg, #00b3ff, #ff5fa2);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+body.light-mode .nav-links a {
+  color: #fff;
+}
+
+body.light-mode .card {
+  background: #fff;
+  color: #222;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+body.light-mode .card h3 {
+  color: #00b3ff;
+}
+
+body.light-mode .contact-section {
+  background: #fff;
+  color: #222;
+  box-shadow: 0 6px 18px rgba(0,179,255,0.3);
+}
+
+body.light-mode footer {
+  background: linear-gradient(90deg, #00b3ff, #ff5fa2);
+  color: #fff;
+}
+
+body.light-mode .search-section {
+  background: #fff;
+  border-color: rgba(0,179,255,0.4);
+}
+
+body.light-mode .search-section input[type="text"] {
+  background: #fafafa;
+  color: #111;
+  border-color: #ddd;
+}
+
+body.light-mode .popup-content {
+  background: #fff;
+  color: #111;
+  border-color: rgba(0,179,255,0.4);
+}
+
+
+
+
+
+  /* ================== RESPONSIVE ================== */
+  @media (max-width: 1024px) {
+    main {
+      padding: 20px 30px;
+      gap: 30px;
+    }
+  }
+  
+  @keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+  }
+  
