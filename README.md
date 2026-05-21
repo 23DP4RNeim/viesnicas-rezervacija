@@ -198,8 +198,4 @@ MIT 2024 © Auria Hotels
 - 🗣️ Citas valodas (EN, DE, RU)
 - 📱 Native apps
 
----
-
-**Izveidots ar ❤️ Viesnīcas Rezervācijas komandas**
-
-*Ikviens var noņemt numuru - tikai ikviens var izveidot pieredzi!* 🏨✨
+file:///C:/Users/neimr/OneDrive/Documents/projekts/convo-linky-main/convo-linky-main/index.html#about 
