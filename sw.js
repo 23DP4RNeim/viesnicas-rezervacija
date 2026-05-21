@@ -1,10 +1,11 @@
 // Service Worker for PWA functionality
-const CACHE_NAME = 'auria-v1';
+const CACHE_NAME = 'auria-v4';
 const urlsToCache = [
     '/',
     '/index.html',
     '/css/styles.css',
     '/js/app.js',
+    '/js/supabase-config.js',
     '/manifest.json'
 ];
 
