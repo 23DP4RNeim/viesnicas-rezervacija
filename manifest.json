@@ -1,0 +1,62 @@
+{
+  "name": "Viesnīcas Rezervācija - Booking Platforma",
+  "short_name": "Viesnīcas",
+  "description": "Vienkarši viesnīcas numuru meklēšana un rezervācija 30+ Eiropas valstīs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1a1a1a",
+  "orientation": "portrait-primary",
+  "lang": "lv",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%231a1a1a' width='192' height='192'/><text x='50%' y='50%' font-size='110' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🏨</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect fill='%231a1a1a' width='512' height='512'/><text x='50%' y='50%' font-size='280' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>🏨</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["ceļošana", "dzīvesveids", "iepirkšanās"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 540 720'><rect fill='%23f5f5f5' width='540' height='720'/><rect fill='%231a1a1a' width='540' height='200'/><text x='270' y='100' font-size='36' text-anchor='middle' dominant-baseline='middle' fill='%23fff' font-weight='bold'>Auria</text></svg>",
+      "sizes": "540x720",
+      "type": "image/svg+xml",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Pārlūkot uzturēšanās",
+      "short_name": "Uzturēšanās",
+      "description": "Pārlūkojiet pieejamās greznās uzturēšanās",
+      "url": "/?section=stays",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><circle fill='%231a1a1a' cx='48' cy='48' r='48'/><text x='48' y='52' font-size='56' text-anchor='middle' dominant-baseline='middle' fill='%23fff'>🏨</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    {
+      "name": "Skatīt rezervācijas",
+      "short_name": "Rezervācijas",
+      "description": "Skatīt savas pašreizējās rezervācijas",
+      "url": "/?section=bookings",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><circle fill='%231a1a1a' cx='48' cy='48' r='48'/><text x='48' y='52' font-size='56' text-anchor='middle' dominant-baseline='middle' fill='%23fff'>📅</text></svg>",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

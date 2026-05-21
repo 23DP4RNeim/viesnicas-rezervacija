@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Viesnīcas Rezervācija - Vienkarši un ātri rezervējiet viesnīcas numurus Latvijā un Eiropā. Labākās cenas, 30+ valstis, draudzīgs interface.">
+    <meta name="theme-color" content="#000000">
+    <title>Viesnīcas Rezervācija — Vienkāršs Booking Viesnīcas Numuriem</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%23000'>✨</text></svg>">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="navbar sticky-top">
+        <div class="container-fluid">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand" onclick="goHome(event)">
+                    <div class="brand-icon">🏨</div>
+                    <span class="brand-text">Viesnīcas Rezervācija</span>
+                </a>
+                <nav class="navbar-nav">
+                    <a href="#stays" class="nav-link">Uzturēšanās</a>
+                    <a href="#experience" class="nav-link">Pieredze</a>
+                    <a href="#about" class="nav-link">Par mums</a>
+                </nav>
+                <button class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Viesnīcas Numuri,<br>Vienkārši Rezervēti</h1>
+            <p class="hero-subtitle">Labākā cena garantēta, 30+ Eiropas valstis, tūlītējā rezervācija bez līgumiem</p>
+            
+            <div class="search-box">
+                <div class="search-input-group">
+                    <div class="search-field">
+                        <label>📍 Vieta</label>
+                        <select id="searchCountry" onchange="updateCities()">
+                            <option value="">Izvēlieties valsti</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>🏙️ Pilsēta</label>
+                        <select id="searchCity">
+                            <option value="">Izvēlieties pilsētu</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>📅 Iepakošanas diena</label>
+                        <input type="date" id="searchCheckin">
+                    </div>
+                    <div class="search-field">
+                        <label>📅 Izpakošanas diena</label>
+                        <input type="date" id="searchCheckout">
+                    </div>
+                    <div class="search-field">
+                        <label>👥 Viesi</label>
+                        <select id="searchGuests">
+                            <option value="">Izvēlieties viesis</option>
+                            <option value="1">1 viesis</option>
+                            <option value="2">2 viesi</option>
+                            <option value="3">3 viesi</option>
+                            <option value="4">4 viesi</option>
+                            <option value="5">5+ viesi</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="searchBtn">🔍 Meklēt</button>
+                </div>
+            </div>Viss">Viss</button>
+                <button class="category-btn" data-category="Pilsētas skats">Pilsētas skats</button>
+                <button class="category-btn" data-category="Dārzs">Dārzs</button>
+                <button class="category-btn" data-category="Ģimene">Ģimene</button>
+                <button class="category-btn" data-category="Suites">Suites</button>
+                <button class="category-btn" data-category="Draudzīgi mājdzīvniekiem">Draudzīgi mājdzīvniekiem</button>
+                <button class="category-btn" data-category="Darba brīvlaiks">Darba brīvlaiks
+            <div class="categories-scroll" id="categoriesContainer">
+                <button class="category-btn active" data-category="Viss">Viss</button>
+                <button class="category-btn" data-category="Pilsētas skats">Pilsētas skats</button>
+                <button class="category-btn" data-category="Dārzs">Dārzs</button>
+                <button class="category-btn" data-category="Ģimene">Ģimene</button>
+                <button class="category-btn" data-category="Svītas">Svītas</button>
+                <button class="category-btn" data-category="Draudzīgi mājdzīv.">Draudzīgi mājdzīv.</button>
+                <button class="category-btn" data-category="Darba brīvlaiks">Darba brīvlaiks</button>
+                <button class="category-btn" data-category="Spa">Spa</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms Grid -->
+    <section class="rooms-section" id="stays">
+        <div class="container">
+            <h2 class="section-title">Ieteiktie Numuri</h2>
+            <div class="rooms-grid" id="roomsGrid">
+                <!-- Rooms will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="experience">
+        <div class="container">
+            <h2 class="section-title">Kāpēc izvēlēties Auria?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Pārbaudīti un droši</h3>
+                    <p>Katra viesnīca tiek pārbaudīta kvalitātes un drošības jautājumos. Jūsu maksājumi un dati ir aizsargāti.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Caurspīdīga cena</h3>
+                    <p>Nav slēpto maksas. Tas, ko redzat, ir tas, ko maksājat. Pilnīga sadalīšana pirms izrakstīšanas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Viesa atsauksmes</h3>
+                    <p>Reālas atsauksmes no reāliem viesiem. Pieņemiet lēmumus, balstoties uz pārbaudītiem atsauksmēm.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Tūlītēja rezervācija</h3>
+                    <p>Rezervējiet sekundēs un saņemiet tūlītēju apstiprinājumu. Nav jāgaida apkārt.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>24/7 Atbalsts</h3>
+                    <p>Nepieciešama palīdzība? Mūsu atbalsta komanda vienmēr ir gatava palīdzēt.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Globālais tīkls</h3>
+                    <p>Rūpīgi atlasīts butika nakšņošanas vietas izcilās atrašanās vietās visā pasaulē.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">Par Auria</h2>
+                <p>Auria ir veltīta izņemtu butika viesnīcu pieredžu sniegšanai ar pilnīgu pārredzamību. Mēs uzskatām, ka ceļošana ir vienkārša, pieejama un bez stresa.</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3>500+</h3>
+                        <p>Atlasīti objekti</p>
+                    </div>
+                    <div class="stat">
+                        <h3>50K+</h3>
+                        <p>Laimīgi viesi</p>
+                    </div>
+                    <div class="stat">
+                        <h3>4.8⭐</h3>
+                        <p>Vidējais vērtējums</p>
+                    </div>
+                    <div class="stat">
+                        <h3>24/7</h3>
+                        <p>Kliendu atbalsts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Detail Modal -->
+    <div class="modal" id="roomModal">
+        <div class="modal-content modal-large">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-body modal-body-grid">
+                <div class="modal-image">
+                    <img id="modalImage" src="" alt="Room">
+                </div>
+                <div class="modal-details">
+                    <h2 id="modalTitle"></h2>
+                    <div class="modal-rating">
+                        <span class="stars" id="modalStars"></span>
+                        <span id="modalRating"></span>
+                    </div>
+                    <div class="modal-info">
+                        <p><strong>Gultas:</strong> <span id="modalBeds"></span></p>
+                        <p><strong>Kategorija:</strong> <span id="modalTag"></span></p>
+                        <p id="modalDescription" class="modal-description"></p>
+                    </div>
+                    <div class="modal-amenities" id="modalAmenities">
+                        <h3>Amenitātes</h3>
+                        <div class="amenities-list" id="amenitiesList"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="price-section">
+                            <p class="original-price">€<span id="modalPrice"></span> par nakti</p>
+                        </div>
+                        <button class="btn-primary btn-large" id="bookingBtn">Rezervēt tagad</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content modal-sm">
+            <button class="modal-close" id="bookingModalClose">&times;</button>
+            <div class="modal-body">
+                <h2>Pabeigt jūsu rezervāciju</h2>
+                <form id="bookingForm">
+                    <div class="booking-summary" id="bookingSummary"></div>
+                    <div class="form-group">
+                        <label for="guestName">Pilnais vārds</label>
+                        <input type="text" id="guestName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guestEmail">E-pasts</label>
+                        <input type="email" id="guestEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guestPhone">Telefons</label>
+                        <input type="tel" id="guestPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingCheckin">Iepakošanas datums</label>
+                        <input type="date" id="bookingCheckin" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingCheckout">Izpakošanas datums</label>
+                        <input type="date" id="bookingCheckout" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingGuests">Vistu skaits</label>
+                        <select id="bookingGuests" required>
+                            <option value="">Izvēlieties</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5+</option>
+                        </select>
+                    </div>
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="agreeTerms" required>
+                        <label for="agreeTerms">Piekrītu noteikumiem un nosacījumiem</label>
+                    </div>
+                    <button type="submit" class="btn-primary btn-large">Apstipriniet rezervāciju</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content modal-sm">
+            <div class="modal-body">
+                <divRezervācija apstiprināta!</h2>
+                <p id="successMessage"></p>
+                <p class="booking-id">Rezervācijas ID: <span id="bookingId"></span></p>
+                <button class="btn-primary" onclick="goHome()">Atgriezties uz sākumu
+                <button class="btn-primary" onclick="document.getElementById('successModal').style.display='none'; window.location.href='/'">Return to Home</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>utika uzturēšanās, vienkārši rezervēta.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Ātrie saites</h4>
+                    <ul>
+                        <li><a href="#stays">Pārlūkot uzturēšanās</a></li>
+                        <li><a href="#about">Par mums</a></li>
+                        <li><a href="#contact">Kontakts</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Juridisks</h4>
+                    <ul>
+                        <li><a href="#privacy">Privātuma politika</a></li>
+                        <li><a href="#terms">Pakalpojumu nosacījumi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Paciemojieties</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Instagram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Auria. Visas tiesības aizsargātas
+                <p>&copy; 2024 Viesnīcas Rezervācija. Visas tiesības aizsargātas.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
