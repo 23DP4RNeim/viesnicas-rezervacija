@@ -110,7 +110,10 @@ const localeContent = {
         features: [
             ['Pārbaudītas viesnīcas', 'Katrs piedāvājums tiek izvērtēts, lai viesiem būtu droša un patīkama uzturēšanās.'],
             ['Skaidras cenas', 'Jūs redzat numura cenu pirms rezervācijas, bez mulsinošām slēptām izmaksām.'],
-            ['Viesu atsauksmes', 'Izvēlieties numuru, balstoties uz reāliem vērtējumiem un pieredzi.']
+            ['Viesu atsauksmes', 'Izvēlieties numuru, balstoties uz reāliem vērtējumiem un pieredzi.'],
+            ['Ātra rezervācija', 'Aizpildiet īsu formu un uzreiz saņemiet rezervācijas apstiprinājumu.'],
+            ['Atbalsts jebkurā laikā', 'Ja rodas jautājumi, mūsu atbalsta komanda ir gatava palīdzēt.'],
+            ['Plašs galamērķu klāsts', 'Atrodiet piemērotu naktsmītni dažādās Eiropas pilsētās un kūrortos.']
         ],
         aboutText: 'Mūsu mērķis ir padarīt viesnīcu rezervēšanu vienkāršu, saprotamu un patīkamu. Mēs palīdzam atrast piemērotu numuru, salīdzināt iespējas un droši pabeigt rezervāciju.',
         aboutStats: ['Atlasīti piedāvājumi', 'Apmierināti viesi', 'Vidējais vērtējums', 'Klientu atbalsts'],
@@ -198,7 +201,10 @@ const localeContent = {
         features: [
             ['Verified hotels', 'Every offer is reviewed so guests can enjoy a safe and pleasant stay.'],
             ['Clear prices', 'You see the room price before booking, without confusing hidden costs.'],
-            ['Guest reviews', 'Choose a room based on real ratings and guest experiences.']
+            ['Guest reviews', 'Choose a room based on real ratings and guest experiences.'],
+            ['Fast reservation', 'Fill in a short form and receive your reservation confirmation right away.'],
+            ['Support anytime', 'If you have questions, our support team is ready to help.'],
+            ['Wide destination choice', 'Find the right stay across a variety of European cities and resorts.']
         ],
         aboutText: 'Our goal is to make hotel booking simple, clear, and enjoyable. We help you find the right room, compare options, and complete your reservation with confidence.',
         aboutStats: ['Curated offers', 'Happy guests', 'Average rating', 'Customer support'],
@@ -454,7 +460,7 @@ function init() {
     ensureHeaderControls();
     setupEventListeners();
     populateCountries();
-    renderRooms(allRooms);
+    renderCurrentCategoryRooms();
     registerServiceWorker();
     initializeDateInputs();
     initializeAuth();
@@ -599,6 +605,18 @@ function updateGuestSelect(selectId, placeholder, options) {
     }
 }
 
+function renderCurrentCategoryRooms() {
+    const filteredRooms = currentCategory === 'Viss'
+        ? allRooms
+        : allRooms.filter(room => room.category === currentCategory);
+
+    renderRooms(filteredRooms);
+
+    document.querySelectorAll('.category-btn').forEach(button => {
+        button.classList.toggle('active', button.dataset.category === currentCategory);
+    });
+}
+
 function applyLanguage(language) {
     currentLanguage = language === 'en' ? 'en' : 'lv';
     localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
@@ -614,8 +632,10 @@ function applyTheme(theme) {
 function toggleLanguage() {
     applyLanguage(currentLanguage === 'lv' ? 'en' : 'lv');
     updateHeaderControlLabels();
+    populateCountries();
+    updateCities();
     translateStaticPage();
-    renderRooms(allRooms);
+    renderCurrentCategoryRooms();
     if (currentRoom) {
         openRoomModal(currentRoom.id);
     }
@@ -976,6 +996,7 @@ function populateCountries() {
     const countrySelect = document.getElementById('searchCountry');
     if (!countrySelect) return;
 
+    const currentValue = countrySelect.value;
     countrySelect.innerHTML = `<option value="">${content().searchPlaceholders.country}</option>`;
     Object.keys(countryCities).forEach(country => {
         const option = document.createElement('option');
@@ -983,6 +1004,10 @@ function populateCountries() {
         option.textContent = country;
         countrySelect.appendChild(option);
     });
+
+    if ([...countrySelect.options].some(option => option.value === currentValue)) {
+        countrySelect.value = currentValue;
+    }
 }
 
 function updateCities() {
@@ -990,6 +1015,7 @@ function updateCities() {
     const citySelect = document.getElementById('searchCity');
     if (!countrySelect || !citySelect) return;
 
+    const currentValue = citySelect.value;
     citySelect.innerHTML = `<option value="">${content().searchPlaceholders.city}</option>`;
 
     (countryCities[countrySelect.value] || []).forEach(city => {
@@ -998,6 +1024,10 @@ function updateCities() {
         option.textContent = city;
         citySelect.appendChild(option);
     });
+
+    if ([...citySelect.options].some(option => option.value === currentValue)) {
+        citySelect.value = currentValue;
+    }
 }
 
 function handleSearch() {
@@ -1026,15 +1056,7 @@ function handleSearch() {
 
 function filterByCategory(category) {
     currentCategory = category;
-    const filteredRooms = category === 'Viss'
-        ? allRooms
-        : allRooms.filter(room => room.category === category);
-
-    renderRooms(filteredRooms);
-
-    document.querySelectorAll('.category-btn').forEach(button => {
-        button.classList.toggle('active', button.dataset.category === category);
-    });
+    renderCurrentCategoryRooms();
 }
 
 async function submitBooking(event) {
@@ -1228,10 +1250,7 @@ function goHome(event) {
     currentCategory = 'Viss';
 
     if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
-        renderRooms(allRooms);
-        document.querySelectorAll('.category-btn').forEach(button => {
-            button.classList.toggle('active', button.dataset.category === 'Viss');
-        });
+        renderCurrentCategoryRooms();
         window.history.replaceState({}, '', 'index.html');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;

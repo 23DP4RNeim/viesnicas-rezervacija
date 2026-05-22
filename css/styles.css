@@ -1134,18 +1134,46 @@ body[data-theme="dark"] .footer-section a:hover {
     color: var(--text);
 }
 
+.auth-status {
+    display: none;
+    margin: 14px 0 0;
+    padding: 12px 14px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.auth-status.error,
+.auth-status.success {
+    display: block;
+}
+
 .availability-note.error,
 .auth-status.error {
-    color: #fecaca;
-    background-color: rgba(127, 29, 29, 0.2);
-    border-color: rgba(248, 113, 113, 0.35);
+    color: #7f1d1d;
+    background-color: #fee2e2;
+    border-color: #fca5a5;
 }
 
 .availability-note.success,
 .auth-status.success {
+    color: #14532d;
+    background-color: #dcfce7;
+    border-color: #86efac;
+}
+
+body[data-theme="dark"] .auth-status.error {
+    color: #fecaca;
+    background-color: rgba(127, 29, 29, 0.35);
+    border-color: rgba(248, 113, 113, 0.45);
+}
+
+body[data-theme="dark"] .auth-status.success {
     color: #bbf7d0;
-    background-color: rgba(20, 83, 45, 0.25);
-    border-color: rgba(74, 222, 128, 0.35);
+    background-color: rgba(20, 83, 45, 0.35);
+    border-color: rgba(74, 222, 128, 0.45);
 }
 
 .auth-container,
