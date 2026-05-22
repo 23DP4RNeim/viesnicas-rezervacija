@@ -9,9 +9,149 @@ let blockedDates = [];
 let authMode = 'login';
 let authUser = null;
 let authInitialized = false;
+let currentLanguage = localStorage.getItem('site_language') || 'lv';
+let currentTheme = localStorage.getItem('site_theme') || 'light';
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const LOCAL_AVAILABILITY_KEY = 'room_unavailability_seed';
+const LANGUAGE_STORAGE_KEY = 'site_language';
+const THEME_STORAGE_KEY = 'site_theme';
+
+const translations = {
+    lv: {
+        brand: 'Viesnīcu rezervācija',
+        navRooms: 'Numuri',
+        navFeatures: 'Priekšrocības',
+        navAbout: 'Par mums',
+        login: 'Pieslēgties',
+        logout: 'Izrakstīties',
+        profileOverview: 'Profila pārskats',
+        reservationsOverview: 'Rezervāciju pārskats',
+        language: 'LV',
+        themeLight: 'Balts',
+        themeDark: 'Melns',
+        heroTitle: 'Viesnīcas numuri,<br>vienkārši rezervēti',
+        heroSubtitle: 'Atrodiet piemērotu numuru Latvijā un Eiropā ar skaidrām cenām un ātru rezervācijas apstiprinājumu.',
+        searchButton: 'Meklēt',
+        sectionRooms: 'Ieteiktie numuri',
+        sectionFeatures: 'Kāpēc izvēlēties mūs?',
+        sectionAbout: 'Par viesnīcu rezervāciju',
+        adminTitle: 'Admin panelis rezervācijām',
+        adminSubtitle: 'Skatiet visas rezervācijas, meklējumus un datumus, kad numuri nav pieejami.',
+        adminOnly: 'Tikai administratoriem',
+        adminLogin: 'Admin pieslēgšanās',
+        adminLoginBtn: 'Pieslēgties kā admin',
+        adminOverview: 'Admin pārskats',
+        adminSignedIn: 'Pieslēgtais admins:',
+        adminRefresh: 'Atjaunot datus',
+        overviewReservationsEmpty: 'Šim profilam vēl nav rezervāciju.',
+        loading: 'Ielādē...',
+        loadingReservations: 'Ielādē rezervācijas...',
+        memberSince: 'Konts izveidots:',
+        bookingDates: 'Datumi:',
+        bookingGuests: 'Viesi:',
+        bookedAt: 'Rezervēts:',
+        roomLabel: 'Numurs',
+        themeLabel: 'Tēma',
+        languageLabel: 'Valoda'
+    },
+    en: {
+        brand: 'Hotel Booking',
+        navRooms: 'Rooms',
+        navFeatures: 'Benefits',
+        navAbout: 'About us',
+        login: 'Sign in',
+        logout: 'Sign out',
+        profileOverview: 'Profile overview',
+        reservationsOverview: 'Reservations overview',
+        language: 'ENG',
+        themeLight: 'White',
+        themeDark: 'Black',
+        heroTitle: 'Hotel rooms,<br>booked simply',
+        heroSubtitle: 'Find the right room in Latvia and across Europe with clear prices and fast confirmation.',
+        searchButton: 'Search',
+        sectionRooms: 'Recommended rooms',
+        sectionFeatures: 'Why choose us?',
+        sectionAbout: 'About hotel booking',
+        adminTitle: 'Admin panel for reservations',
+        adminSubtitle: 'View all reservations, searches, and dates when rooms are unavailable.',
+        adminOnly: 'Administrators only',
+        adminLogin: 'Admin sign in',
+        adminLoginBtn: 'Sign in as admin',
+        adminOverview: 'Admin overview',
+        adminSignedIn: 'Signed in admin:',
+        adminRefresh: 'Refresh data',
+        overviewReservationsEmpty: 'There are no reservations on this profile yet.',
+        loading: 'Loading...',
+        loadingReservations: 'Loading reservations...',
+        memberSince: 'Member since:',
+        bookingDates: 'Dates:',
+        bookingGuests: 'Guests:',
+        bookedAt: 'Booked:',
+        roomLabel: 'Room',
+        themeLabel: 'Theme',
+        languageLabel: 'Language'
+    }
+};
+
+const roomTranslations = {
+    1: {
+        en: {
+            name: 'Standard double room',
+            category: 'City view',
+            beds: '1 double bed and 1 sofa',
+            description: 'A comfortable room for a short break or work trip with a city view.'
+        }
+    },
+    2: {
+        en: {
+            name: 'Deluxe room with garden',
+            category: 'Garden',
+            beds: '1 large double bed and terrace',
+            description: 'A spacious room with a calm atmosphere, terrace, and garden access.'
+        }
+    },
+    3: {
+        en: {
+            name: 'Family room',
+            category: 'Family',
+            beds: '2 single beds and 1 double bed',
+            description: 'A comfortable and practical room for families with enough space for everyone.'
+        }
+    },
+    4: {
+        en: {
+            name: 'Royal luxury room',
+            category: 'Luxury rooms',
+            beds: 'Large double bed and lounge area',
+            description: 'An elegant luxury room with a separate lounge area and premium comfort.'
+        }
+    },
+    5: {
+        en: {
+            name: 'Pet-friendly room',
+            category: 'Pet friendly',
+            beds: '1 double bed and space for a pet',
+            description: 'A room for guests travelling together with their pet.'
+        }
+    },
+    6: {
+        en: {
+            name: 'Business travel room',
+            category: 'Business travel',
+            beds: '1 double bed and work desk',
+            description: 'A room with a comfortable workspace, reliable internet, and calm atmosphere.'
+        }
+    },
+    7: {
+        en: {
+            name: 'Premium spa room',
+            category: 'Spa',
+            beds: 'Large double bed and spa bathroom',
+            description: 'A relaxing spa-inspired room designed for a peaceful stay.'
+        }
+    }
+};
 
 const countryCities = {
     Latvija: ['Rīga', 'Jūrmala', 'Liepāja', 'Daugavpils', 'Ventspils'],
@@ -124,9 +264,12 @@ const rooms = [
 ];
 
 function init() {
+    applyTheme(currentTheme);
+    applyLanguage(currentLanguage);
     resetBodyScroll();
     allRooms = [...rooms];
     ensureAuthEnhancements();
+    ensureHeaderControls();
     setupEventListeners();
     populateCountries();
     renderRooms(allRooms);
@@ -136,6 +279,8 @@ function init() {
     hydratePageSectionFromHash();
     initializeAvailability();
     initializeAdminPage();
+    updateHeaderControlLabels();
+    translateStaticPage();
 }
 
 function renderRooms(roomsToShow) {
@@ -143,27 +288,188 @@ function renderRooms(roomsToShow) {
     if (!roomsGrid) return;
 
     roomsGrid.innerHTML = roomsToShow.map(room => {
+        const localizedRoom = getLocalizedRoom(room);
         const unavailableLabel = getNextBlockedRangeLabel(room.id);
 
         return `
             <div class="room-card" onclick="openRoomModal(${room.id})">
                 <div class="room-image">
-                    <img src="${room.image}" alt="${room.name}" loading="lazy">
-                    <div class="room-tag">${room.category}</div>
+                    <img src="${room.image}" alt="${localizedRoom.name}" loading="lazy">
+                    <div class="room-tag">${localizedRoom.category}</div>
                 </div>
                 <div class="room-content">
-                    <h3 class="room-name">${room.name}</h3>
+                    <h3 class="room-name">${localizedRoom.name}</h3>
                     <div class="room-rating">
                         <span class="stars">${generateStars(room.rating)}</span>
                         <span>${room.rating} (${room.reviews})</span>
                     </div>
-                    <p class="room-info">${room.beds}</p>
+                    <p class="room-info">${localizedRoom.beds}</p>
                     ${unavailableLabel ? `<p class="availability-chip">${unavailableLabel}</p>` : ''}
-                    <p class="room-price">EUR ${room.price} <span style="font-size: 14px; color: var(--text-muted);">par nakti</span></p>
+                    <p class="room-price">EUR ${room.price} <span style="font-size: 14px; color: var(--text-muted);">${currentLanguage === 'en' ? 'per night' : 'par nakti'}</span></p>
                 </div>
             </div>
         `;
     }).join('');
+}
+
+function ensureHeaderControls() {
+    const navbarContent = document.querySelector('.navbar-content');
+    if (!navbarContent || document.getElementById('headerControls')) return;
+
+    const controls = document.createElement('div');
+    controls.className = 'header-controls';
+    controls.id = 'headerControls';
+    controls.innerHTML = `
+        <button type="button" class="header-control-btn" id="languageToggleBtn">
+            <span class="header-control-label">${t('languageLabel')}</span>
+            <span id="languageToggleValue">${t('language')}</span>
+        </button>
+        <button type="button" class="header-control-btn" id="themeToggleBtn">
+            <span class="header-control-label">${t('themeLabel')}</span>
+            <span id="themeToggleValue">${currentTheme === 'dark' ? t('themeDark') : t('themeLight')}</span>
+        </button>
+    `;
+
+    const navToggle = document.getElementById('navToggle');
+    if (navToggle) {
+        navbarContent.insertBefore(controls, navToggle);
+    } else {
+        navbarContent.appendChild(controls);
+    }
+}
+
+function updateHeaderControlLabels() {
+    setText('languageToggleValue', t('language'));
+    setText('themeToggleValue', currentTheme === 'dark' ? t('themeDark') : t('themeLight'));
+
+    const labels = document.querySelectorAll('.header-control-label');
+    if (labels[0]) labels[0].textContent = t('languageLabel');
+    if (labels[1]) labels[1].textContent = t('themeLabel');
+}
+
+function t(key) {
+    return translations[currentLanguage]?.[key] || translations.lv[key] || key;
+}
+
+function applyLanguage(language) {
+    currentLanguage = language === 'en' ? 'en' : 'lv';
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, currentLanguage);
+    document.documentElement.lang = currentLanguage;
+}
+
+function applyTheme(theme) {
+    currentTheme = theme === 'dark' ? 'dark' : 'light';
+    localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
+    document.body.dataset.theme = currentTheme;
+}
+
+function toggleLanguage() {
+    applyLanguage(currentLanguage === 'lv' ? 'en' : 'lv');
+    updateHeaderControlLabels();
+    translateStaticPage();
+    renderRooms(allRooms);
+    if (currentRoom) {
+        openRoomModal(currentRoom.id);
+    }
+}
+
+function toggleTheme() {
+    applyTheme(currentTheme === 'light' ? 'dark' : 'light');
+    updateHeaderControlLabels();
+}
+
+function translateStaticPage() {
+    const brandText = document.querySelector('.brand-text');
+    if (brandText) brandText.textContent = t('brand');
+
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link:not(#authBtn)');
+    if (navLinks[0]) navLinks[0].textContent = t('navRooms');
+    if (navLinks[1]) navLinks[1].textContent = t('navFeatures');
+    if (navLinks[2]) navLinks[2].textContent = t('navAbout');
+
+    if (!authUser) {
+        const authBtn = document.getElementById('authBtn');
+        if (authBtn) authBtn.textContent = t('login');
+    }
+
+    const profileReservationsBtn = document.getElementById('profileReservationsBtn');
+    const profileOverviewBtn = document.getElementById('profileOverviewBtn');
+    const profileSignOutBtn = document.getElementById('profileSignOutBtn');
+    if (profileReservationsBtn) profileReservationsBtn.textContent = t('reservationsOverview');
+    if (profileOverviewBtn) profileOverviewBtn.textContent = t('profileOverview');
+    if (profileSignOutBtn) profileSignOutBtn.textContent = t('logout');
+
+    const profileOverviewModalTitle = document.querySelector('#profileOverviewModal h2');
+    const reservationsOverviewModalTitle = document.querySelector('#reservationsOverviewModal h2');
+    if (profileOverviewModalTitle) profileOverviewModalTitle.textContent = t('profileOverview');
+    if (reservationsOverviewModalTitle) reservationsOverviewModalTitle.textContent = t('reservationsOverview');
+
+    const authFirstNameLabel = document.querySelector('#authFirstNameGroup label');
+    const authFirstNameInput = document.getElementById('authFirstName');
+    if (authFirstNameLabel) authFirstNameLabel.textContent = currentLanguage === 'en' ? 'First name' : 'Vārds';
+    if (authFirstNameInput) authFirstNameInput.placeholder = currentLanguage === 'en' ? 'Your first name' : 'Jūsu vārds';
+
+    const page = getCurrentPage();
+
+    if (page === 'home') {
+        const heroTitle = document.querySelector('.hero-title');
+        const heroSubtitle = document.querySelector('.hero-subtitle');
+        const sectionTitles = document.querySelectorAll('.section-title');
+        const searchBtn = document.getElementById('searchBtn');
+
+        if (heroTitle) heroTitle.innerHTML = t('heroTitle');
+        if (heroSubtitle) heroSubtitle.textContent = t('heroSubtitle');
+        if (searchBtn) searchBtn.textContent = t('searchButton');
+        if (sectionTitles[0]) sectionTitles[0].textContent = t('sectionRooms');
+        if (sectionTitles[1]) sectionTitles[1].textContent = t('sectionFeatures');
+        if (sectionTitles[2]) sectionTitles[2].textContent = t('sectionAbout');
+    }
+
+    if (page === 'auth') {
+        const authHeading = document.querySelector('.auth-container h2');
+        const signupBtn = document.getElementById('showSignup');
+        const loginBtn = document.getElementById('showLogin');
+        const submitBtn = document.getElementById('loginSubmit');
+
+        if (authHeading && authMode !== 'signup') authHeading.textContent = t('login');
+        if (signupBtn) signupBtn.textContent = currentLanguage === 'en' ? 'Register' : 'Reģistrēties';
+        if (loginBtn) loginBtn.textContent = currentLanguage === 'en' ? 'Back to sign in' : 'Atpakaļ uz pieslēgšanos';
+        if (submitBtn && authMode !== 'signup') submitBtn.textContent = t('login');
+    }
+
+    if (page === 'booking') {
+        const bookingHeading = document.querySelector('main h2');
+        if (bookingHeading) {
+            bookingHeading.textContent = currentLanguage === 'en' ? 'Complete reservation' : 'Pabeigt rezervāciju';
+        }
+    }
+
+    if (page === 'admin') {
+        const sectionTitle = document.querySelector('.admin-title');
+        const adminKicker = document.querySelector('.admin-kicker');
+        const adminSubtitle = document.querySelector('.admin-subtitle');
+        const adminLoginHeading = document.querySelector('#adminLoginPanel h2');
+        const adminOverviewHeading = document.querySelector('.admin-toolbar h2');
+        const adminSignedIn = document.querySelector('.admin-toolbar .auth-helper');
+        const refreshBtn = document.getElementById('adminRefreshBtn');
+        const loginBtn = document.getElementById('adminLoginSubmit');
+
+        if (sectionTitle) sectionTitle.textContent = t('adminTitle');
+        if (adminKicker) adminKicker.textContent = t('adminOnly');
+        if (adminSubtitle) adminSubtitle.textContent = t('adminSubtitle');
+        if (adminLoginHeading) adminLoginHeading.textContent = t('adminLogin');
+        if (adminOverviewHeading) adminOverviewHeading.textContent = t('adminOverview');
+        if (adminSignedIn && document.getElementById('adminUserLabel')) {
+            adminSignedIn.innerHTML = `${t('adminSignedIn')} <strong id="adminUserLabel">${escapeHtml(document.getElementById('adminUserLabel').textContent)}</strong>`;
+        }
+        if (refreshBtn) refreshBtn.textContent = t('adminRefresh');
+        if (loginBtn) loginBtn.textContent = t('adminLoginBtn');
+    }
+}
+
+function getLocalizedRoom(room) {
+    const localized = roomTranslations[room.id]?.[currentLanguage];
+    return localized ? { ...room, ...localized } : room;
 }
 
 function generateStars(rating) {
@@ -174,33 +480,34 @@ function generateStars(rating) {
 function openRoomModal(roomId) {
     currentRoom = allRooms.find(room => room.id === roomId);
     if (!currentRoom) return;
+    const localizedRoom = getLocalizedRoom(currentRoom);
 
-    setText('modalTitle', currentRoom.name);
+    setText('modalTitle', localizedRoom.name);
     setText('modalPrice', currentRoom.price);
     setText('modalStars', generateStars(currentRoom.rating));
-    setText('modalRating', `${currentRoom.rating} (${currentRoom.reviews} atsauksmes)`);
-    setText('modalBeds', currentRoom.beds);
-    setText('modalTag', currentRoom.category);
-    setText('modalDescription', currentRoom.description);
-    setText('selectedRoomName', currentRoom.name);
+    setText('modalRating', `${currentRoom.rating} (${currentRoom.reviews} ${currentLanguage === 'en' ? 'reviews' : 'atsauksmes'})`);
+    setText('modalBeds', localizedRoom.beds);
+    setText('modalTag', localizedRoom.category);
+    setText('modalDescription', localizedRoom.description);
+    setText('selectedRoomName', localizedRoom.name);
     setText('selectedRoomPrice', currentRoom.price);
 
     const modalImage = document.getElementById('modalImage');
     if (modalImage) {
         modalImage.src = currentRoom.image;
-        modalImage.alt = currentRoom.name;
+        modalImage.alt = localizedRoom.name;
     }
 
     const amenitiesList = document.getElementById('amenitiesList');
     if (amenitiesList) {
-        amenitiesList.innerHTML = currentRoom.amenities
+        amenitiesList.innerHTML = localizedRoom.amenities
             .map(amenity => `<div class="amenity-item">✓ ${amenity}</div>`)
             .join('');
     }
 
     const roomAvailability = document.getElementById('roomAvailability');
     if (roomAvailability) {
-        roomAvailability.textContent = getNextBlockedRangeLabel(roomId) || 'Sis numurs paslaik ir pieejams.';
+        roomAvailability.textContent = getNextBlockedRangeLabel(roomId) || (currentLanguage === 'en' ? 'This room is currently available.' : 'Sis numurs paslaik ir pieejams.');
     }
 
     showModal('roomModal');
@@ -522,6 +829,8 @@ function setupEventListeners() {
     document.getElementById('guestName')?.addEventListener('input', sanitizeGuestNameInput);
     document.getElementById('guestPhone')?.addEventListener('input', sanitizeGuestPhoneInput);
     document.getElementById('authBtn')?.addEventListener('click', handleAuthButtonClick);
+    document.getElementById('languageToggleBtn')?.addEventListener('click', toggleLanguage);
+    document.getElementById('themeToggleBtn')?.addEventListener('click', toggleTheme);
     document.getElementById('profileOverviewBtn')?.addEventListener('click', event => {
         event.preventDefault();
         closeProfileMenu();
@@ -803,11 +1112,15 @@ function setAuthMode(mode) {
     const firstNameGroup = document.getElementById('authFirstNameGroup');
 
     if (title) {
-        title.textContent = mode === 'signup' ? 'Registreties' : 'Pieslegties';
+        title.textContent = mode === 'signup'
+            ? (currentLanguage === 'en' ? 'Register' : 'Reģistrēties')
+            : t('login');
     }
 
     if (submitButton) {
-        submitButton.textContent = mode === 'signup' ? 'Izveidot kontu' : 'Pieslegties';
+        submitButton.textContent = mode === 'signup'
+            ? (currentLanguage === 'en' ? 'Create account' : 'Izveidot kontu')
+            : t('login');
     }
 
     if (signupButton) {
@@ -824,8 +1137,12 @@ function setAuthMode(mode) {
 
     if (helper) {
         helper.textContent = mode === 'signup'
-            ? 'Izveidojiet kontu ar e-pastu un paroli. Ja Supabase prasa e-pasta apstiprinajumu, tam vajag SMTP vai izslegtu Confirm Email.'
-            : 'Piesledzieties, lai redzetu savu e-pastu rezervacijas forma.';
+            ? (currentLanguage === 'en'
+                ? 'Create your account with email and password. If Supabase asks for email confirmation, you need SMTP or disabled Confirm Email.'
+                : 'Izveidojiet kontu ar e-pastu un paroli. Ja Supabase prasa e-pasta apstiprinajumu, tam vajag SMTP vai izslegtu Confirm Email.')
+            : (currentLanguage === 'en'
+                ? 'Sign in to see your email in the reservation form.'
+                : 'Piesledzieties, lai redzetu savu e-pastu rezervacijas forma.');
     }
 
     setAuthStatus('');
@@ -1017,7 +1334,7 @@ function ensureProfileModals() {
                 <div class="modal-content modal-sm">
                     <button class="modal-close" type="button" onclick="hideModal('profileOverviewModal')">&times;</button>
                     <div class="modal-body">
-                        <h2>Profila pārskats</h2>
+                        <h2>${t('profileOverview')}</h2>
                         <div class="profile-card">
                             <div class="profile-avatar-large">👤</div>
                             <div class="profile-card-content">
@@ -1038,9 +1355,9 @@ function ensureProfileModals() {
                 <div class="modal-content modal-large">
                     <button class="modal-close" type="button" onclick="hideModal('reservationsOverviewModal')">&times;</button>
                     <div class="modal-body">
-                        <h2>Rezervāciju pārskats</h2>
+                        <h2>${t('reservationsOverview')}</h2>
                         <div class="profile-reservations-list" id="profileReservationsList">
-                            <p>Ielādē...</p>
+                            <p>${t('loading')}</p>
                         </div>
                     </div>
                 </div>
@@ -1079,8 +1396,8 @@ function showProfileOverviewModal() {
     setText(
         'profileOverviewMemberSince',
         authUser.created_at
-            ? `Konts izveidots: ${formatDateTime(authUser.created_at)}`
-            : 'Konts izveidots: -'
+            ? `${t('memberSince')} ${formatDateTime(authUser.created_at)}`
+            : `${t('memberSince')} -`
     );
     showModal('profileOverviewModal');
 }
@@ -1090,7 +1407,7 @@ async function showReservationsOverviewModal() {
 
     const list = document.getElementById('profileReservationsList');
     if (list) {
-        list.innerHTML = '<p>Ielādē rezervācijas...</p>';
+        list.innerHTML = `<p>${t('loadingReservations')}</p>`;
     }
 
     showModal('reservationsOverviewModal');
@@ -1126,20 +1443,20 @@ function renderUserReservations(reservations) {
     if (!list) return;
 
     if (!reservations.length) {
-        list.innerHTML = '<p>Šim profilam vēl nav rezervāciju.</p>';
+        list.innerHTML = `<p>${t('overviewReservationsEmpty')}</p>`;
         return;
     }
 
     list.innerHTML = reservations.map(booking => `
         <article class="reservation-card">
             <div class="reservation-card-head">
-                <h3>${escapeHtml(booking.room_name || booking.room || 'Numurs')}</h3>
+                <h3>${escapeHtml(booking.room_name || booking.room || t('roomLabel'))}</h3>
                 <span class="reservation-total">EUR ${Number(booking.total_price || 0).toFixed(2)}</span>
             </div>
             <p><strong>ID:</strong> ${escapeHtml(booking.id || '-')}</p>
-            <p><strong>Datumi:</strong> ${formatDate(booking.checkin)} - ${formatDate(booking.checkout)}</p>
-            <p><strong>Viesi:</strong> ${escapeHtml(String(booking.guests || '-'))}</p>
-            <p><strong>Rezervēts:</strong> ${formatDateTime(booking.created_at || booking.date || new Date().toISOString())}</p>
+            <p><strong>${t('bookingDates')}</strong> ${formatDate(booking.checkin)} - ${formatDate(booking.checkout)}</p>
+            <p><strong>${t('bookingGuests')}</strong> ${escapeHtml(String(booking.guests || '-'))}</p>
+            <p><strong>${t('bookedAt')}</strong> ${formatDateTime(booking.created_at || booking.date || new Date().toISOString())}</p>
         </article>
     `).join('');
 }
@@ -1530,7 +1847,9 @@ function getNextBlockedRangeLabel(roomId) {
     const upcoming = blockedDates.find(range => Number(range.room_id) === Number(roomId));
     if (!upcoming) return '';
 
-    return `Nav pieejams ${formatDate(upcoming.start_date)} - ${formatDate(upcoming.end_date)}`;
+    return currentLanguage === 'en'
+        ? `Unavailable ${formatDate(upcoming.start_date)} - ${formatDate(upcoming.end_date)}`
+        : `Nav pieejams ${formatDate(upcoming.start_date)} - ${formatDate(upcoming.end_date)}`;
 }
 
 function datesOverlap(checkin, checkout, blockedStart, blockedEnd) {

@@ -37,6 +37,18 @@ body {
     line-height: 1.6;
 }
 
+body[data-theme="dark"] {
+    --primary: #f8fafc;
+    --primary-hover: #e5e7eb;
+    --secondary: #111827;
+    --border: #374151;
+    --text: #f8fafc;
+    --text-muted: #cbd5e1;
+    --bg: #0f172a;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.28);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
 body.modal-open {
     overflow: hidden;
 }
@@ -112,6 +124,7 @@ body.modal-open {
     display: none;
     gap: 32px;
     font-size: 14px;
+    align-items: center;
 }
 
 .nav-link {
@@ -137,6 +150,40 @@ body.modal-open {
     box-shadow: var(--shadow-lg);
     flex-direction: column;
     gap: 16px;
+}
+
+.header-controls {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: 12px;
+}
+
+.header-control-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.header-control-btn:hover {
+    background: #f9fafb;
+    transform: translateY(-1px);
+}
+
+.header-control-label {
+    color: var(--text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .nav-toggle {
@@ -196,6 +243,72 @@ body.modal-open {
     margin: 0 auto;
     color: var(--text);
     backdrop-filter: blur(10px);
+}
+
+body[data-theme="dark"] .navbar,
+body[data-theme="dark"] .navbar-nav.open,
+body[data-theme="dark"] .search-box,
+body[data-theme="dark"] .feature-card,
+body[data-theme="dark"] .room-card,
+body[data-theme="dark"] .modal-content,
+body[data-theme="dark"] .modal-body,
+body[data-theme="dark"] .booking-summary,
+body[data-theme="dark"] .room-selection-info,
+body[data-theme="dark"] .category-btn,
+body[data-theme="dark"] .amenity-item,
+body[data-theme="dark"] .booking-id,
+body[data-theme="dark"] .auth-container,
+body[data-theme="dark"] .admin-dashboard,
+body[data-theme="dark"] .profile-menu,
+body[data-theme="dark"] .header-control-btn,
+body[data-theme="dark"] .profile-menu-item,
+body[data-theme="dark"] .reservation-card,
+body[data-theme="dark"] .profile-card,
+body[data-theme="dark"] .admin-stat-card,
+body[data-theme="dark"] .admin-table {
+    background: #111827;
+    color: #f8fafc;
+}
+
+body[data-theme="dark"] .admin-table th {
+    background: #1f2937;
+    color: #cbd5e1;
+}
+
+body[data-theme="dark"] .profile-menu-item:hover,
+body[data-theme="dark"] .header-control-btn:hover {
+    background: #1f2937;
+}
+
+body[data-theme="dark"] .search-field input,
+body[data-theme="dark"] .search-field select,
+body[data-theme="dark"] .form-group input,
+body[data-theme="dark"] .form-group select {
+    background: #0f172a;
+    color: #f8fafc;
+    border-color: #374151;
+}
+
+body[data-theme="dark"] .search-field label,
+body[data-theme="dark"] .form-group label,
+body[data-theme="dark"] .room-name,
+body[data-theme="dark"] .room-rating,
+body[data-theme="dark"] .room-price,
+body[data-theme="dark"] .feature-card h3,
+body[data-theme="dark"] .modal-body h2,
+body[data-theme="dark"] .modal-details h2,
+body[data-theme="dark"] .admin-section h3 {
+    color: #f8fafc;
+}
+
+body[data-theme="dark"] .feature-card p,
+body[data-theme="dark"] .room-info,
+body[data-theme="dark"] .hero-subtitle,
+body[data-theme="dark"] .profile-card-content p,
+body[data-theme="dark"] .auth-helper,
+body[data-theme="dark"] .admin-subtitle,
+body[data-theme="dark"] .admin-kicker {
+    color: #cbd5e1;
 }
 
 .search-input-group {
@@ -988,6 +1101,19 @@ body.modal-open {
    Responsive
    =========================== */
 @media (max-width: 768px) {
+    .header-controls {
+        margin-left: 0;
+        margin-right: 8px;
+    }
+
+    .header-control-btn {
+        padding: 8px 10px;
+    }
+
+    .header-control-label {
+        display: none;
+    }
+
     .hero-title {
         font-size: 36px;
     }
