@@ -8,7 +8,8 @@
 
     window.SUPABASE_CONFIG = {
         url: SUPABASE_URL,
-        anonKey: SUPABASE_ANON_KEY
+        anonKey: SUPABASE_ANON_KEY,
+        adminRedirect: 'admin.html'
     };
 
     if (!window.supabase || !window.supabase.createClient) {

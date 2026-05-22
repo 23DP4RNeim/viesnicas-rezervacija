@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin panelis rezervāciju pārvaldībai">
+    <title>Admin Panelis — Viesnīcu rezervācija</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="admin">
+    <header class="navbar sticky-top">
+        <div class="container-fluid">
+            <div class="navbar-content">
+                <a href="index.html" class="navbar-brand" onclick="goHome(event)">
+                    <div class="brand-icon">🏨</div>
+                    <span class="brand-text">Viesnīcu rezervācija</span>
+                </a>
+                <nav class="navbar-nav">
+                    <a href="index.html#stays" class="nav-link">Numuri</a>
+                    <a href="index.html#features" class="nav-link">Priekšrocības</a>
+                    <a href="index.html#about" class="nav-link">Par mums</a>
+                    <button class="btn-link nav-link" id="authBtn">Pieslēgties</button>
+                </nav>
+                <button class="nav-toggle" id="navToggle" aria-label="Atvērt izvēlni">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-page">
+        <section class="admin-hero">
+            <div class="container">
+                <p class="admin-kicker">Tikai administratoriem</p>
+                <h1 class="section-title admin-title">Admin panelis rezervācijām</h1>
+                <p class="admin-subtitle">Skatiet visas rezervācijas, meklējumus un datumus, kad numuri nav pieejami.</p>
+            </div>
+        </section>
+
+        <section class="container admin-shell">
+            <div class="auth-container" id="adminLoginPanel">
+                <h2>Admin pieslēgšanās</h2>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label for="adminEmail">Admin e-pasts</label>
+                        <input type="email" id="adminEmail" placeholder="admin@piemers.lv" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="adminPassword">Parole</label>
+                        <input type="password" id="adminPassword" placeholder="Parole" required>
+                    </div>
+                    <button type="submit" class="btn-primary" id="adminLoginSubmit">Pieslēgties kā admin</button>
+                </form>
+                <p class="auth-helper">Šeit drīkst ienākt tikai konti, kuru e-pasts ir pievienots `admin_users` tabulai Supabase.</p>
+                <p class="auth-status" id="adminStatus"></p>
+            </div>
+
+            <div class="admin-dashboard" id="adminDashboard" style="display:none;">
+                <div class="admin-toolbar">
+                    <div>
+                        <h2>Admin pārskats</h2>
+                        <p class="auth-helper">Pieslēgtais admins: <strong id="adminUserLabel"></strong></p>
+                    </div>
+                    <div class="admin-toolbar-actions">
+                        <button class="btn-secondary" id="adminRefreshBtn" type="button">Atjaunot datus</button>
+                        <button class="btn-primary" id="adminSignOutBtn" type="button">Iziet</button>
+                    </div>
+                </div>
+
+                <p class="auth-status" id="adminDashboardStatus"></p>
+
+                <div class="admin-stats-grid">
+                    <div class="admin-stat-card">
+                        <span>Rezervācijas</span>
+                        <strong id="adminBookingsCount">0</strong>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span>Meklējumi</span>
+                        <strong id="adminSearchesCount">0</strong>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span>Bloķētie datumi</span>
+                        <strong id="adminBlockedCount">0</strong>
+                    </div>
+                    <div class="admin-stat-card">
+                        <span>Kopējie ieņēmumi</span>
+                        <strong id="adminRevenue">EUR 0.00</strong>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Visas rezervācijas</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Vārds</th>
+                                    <th>E-pasts</th>
+                                    <th>Numurs</th>
+                                    <th>Ievākšanās</th>
+                                    <th>Izvākšanās</th>
+                                    <th>Viesi</th>
+                                    <th>Summa</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminBookingsTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Visi meklējumi</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Valsts</th>
+                                    <th>Pilsēta</th>
+                                    <th>Ievākšanās</th>
+                                    <th>Izvākšanās</th>
+                                    <th>Viesi</th>
+                                    <th>Izveidots</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminSearchesTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h3>Numuru nepieejamība</h3>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Numurs</th>
+                                    <th>No</th>
+                                    <th>Līdz</th>
+                                    <th>Piezīme</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminBlockedTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Viesnīcu rezervācija.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

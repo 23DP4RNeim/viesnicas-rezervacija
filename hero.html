@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Viesnīcu rezervācija - Hero section">
+    <title>Viesnīcu rezervācija — Sākums</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="navbar sticky-top">
+        <div class="container-fluid">
+            <div class="navbar-content">
+                <a href="index.html" class="navbar-brand">
+                    <div class="brand-icon">🏨</div>
+                    <span class="brand-text">Viesnīcu rezervācija</span>
+                </a>
+                <nav class="navbar-nav">
+                    <a href="stays.html" class="nav-link">Numuri</a>
+                    <a href="features.html" class="nav-link">Priekšrocības</a>
+                    <a href="about.html" class="nav-link">Par mums</a>
+                    <button class="btn-link nav-link" id="authBtn">Pieslēgties</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Viesnīcas numuri,<br>vienkārši rezervēti</h1>
+            <p class="hero-subtitle">Atrodiet piemērotu numuru Latvijā un Eiropā ar skaidrām cenām un ātru rezervācijas apstiprinājumu.</p>
+
+            <div class="search-box">
+                <div class="search-input-group">
+                    <div class="search-field">
+                        <label>Vieta</label>
+                        <select id="searchCountry">
+                            <option value="">Izvēlieties valsti</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Pilsēta</label>
+                        <select id="searchCity">
+                            <option value="">Izvēlieties pilsētu</option>
+                        </select>
+                    </div>
+                    <div class="search-field">
+                        <label>Ievākšanās diena</label>
+                        <input type="date" id="searchCheckin">
+                    </div>
+                    <div class="search-field">
+                        <label>Izvākšanās diena</label>
+                        <input type="date" id="searchCheckout">
+                    </div>
+                    <div class="search-field">
+                        <label>Viesi</label>
+                        <select id="searchGuests">
+                            <option value="">Izvēlieties viesu skaitu</option>
+                            <option value="1">1 viesis</option>
+                            <option value="2">2 viesi</option>
+                            <option value="3">3 viesi</option>
+                            <option value="4">4 viesi</option>
+                            <option value="5">5+ viesi</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="searchBtn">Meklēt</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Viesnīcu rezervācija.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Authentication Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content modal-sm">
+            <button class="modal-close" id="authModalClose">&times;</button>
+            <div class="modal-body">
+                <h2 id="authTitle">Pieslēgties</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="authEmail">E-pasts</label>
+                        <input type="email" id="authEmail" placeholder="jusu@epasts.lv" required>
+                    </div>
+                    <div class="form-group" id="passwordGroup">
+                        <label for="authPassword">Parole</label>
+                        <input type="password" id="authPassword" placeholder="Parole" required>
+                    </div>
+                    <div class="auth-actions">
+                        <button type="submit" class="btn-primary" id="loginSubmit">Pieslēgties</button>
+                        <button type="button" class="btn-secondary" id="showSignup">Reģistrēties</button>
+                    </div>
+                </form>
+                <div style="margin-top:12px; font-size: 13px; color: var(--text-muted);">
+                    <button class="btn-link" id="magicLinkBtn">Sūtīt pieslēgšanas saiti (bez paroles)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

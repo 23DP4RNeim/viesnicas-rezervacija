@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pieslēgties / Reģistrēties">
+    <title>Pieslēgties — Viesnīcu rezervācija</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="auth">
+    <header class="navbar sticky-top">
+        <div class="container-fluid">
+            <div class="navbar-content">
+                <a href="index.html" class="navbar-brand" onclick="goHome(event)">
+                    <div class="brand-icon">🏨</div>
+                    <span class="brand-text">Viesnīcu rezervācija</span>
+                </a>
+                <nav class="navbar-nav">
+                    <a href="index.html#stays" class="nav-link">Numuri</a>
+                    <a href="index.html#features" class="nav-link">Priekšrocības</a>
+                    <a href="index.html#about" class="nav-link">Par mums</a>
+                    <button class="btn-link nav-link" id="authBtn">Pieslēgties</button>
+                </nav>
+                <button class="nav-toggle" id="navToggle" aria-label="Atvērt izvēlni">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <h2 id="authTitle">Pieslēgties</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="authEmail">E-pasts</label>
+                    <input type="email" id="authEmail" placeholder="jusu@epasts.lv" required>
+                </div>
+                <div class="form-group">
+                    <label for="authPassword">Parole</label>
+                    <input type="password" id="authPassword" placeholder="Parole" required>
+                </div>
+                <div class="auth-actions">
+                    <button type="submit" class="btn-primary" id="loginSubmit">Pieslēgties</button>
+                    <button type="button" class="btn-secondary" id="showSignup">Reģistrēties</button>
+                    <button type="button" class="btn-secondary" id="showLogin" style="display:none;">Atpakaļ uz pieslēgšanos</button>
+                </div>
+                <p class="auth-helper" id="authHelper"></p>
+                <p class="auth-status" id="authStatus"></p>
+                <div style="margin-top:12px; font-size: 13px; color: var(--text-muted);">
+                    <button type="button" class="btn-link" id="magicLinkBtn">Sūtīt pieslēgšanas saiti (bez paroles)</button>
+                </div>
+            </form>
+            <div class="auth-admin-entry" id="authAdminLink" style="display:none;">
+                <a href="admin.html" class="btn-secondary">Atvērt admin paneli</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Viesnīcu rezervācija.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
