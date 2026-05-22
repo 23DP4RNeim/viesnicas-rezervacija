@@ -197,5 +197,3 @@ MIT 2024 © Auria Hotels
 - 📊 Admin panelis
 - 🗣️ Citas valodas (EN, DE, RU)
 - 📱 Native apps
-
-file:///C:/Users/neimr/OneDrive/Documents/projekts/convo-linky-main/convo-linky-main/index.html#about 
