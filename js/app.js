@@ -52,6 +52,7 @@ const translations = {
         bookingGuests: 'Viesi:',
         bookedAt: 'Rezervēts:',
         roomLabel: 'Numurs',
+        profileLabel: 'Profils',
         themeLabel: 'Tēma',
         languageLabel: 'Valoda'
     },
@@ -89,8 +90,188 @@ const translations = {
         bookingGuests: 'Guests:',
         bookedAt: 'Booked:',
         roomLabel: 'Room',
+        profileLabel: 'Profile',
         themeLabel: 'Theme',
         languageLabel: 'Language'
+    }
+};
+
+const localeContent = {
+    lv: {
+        locale: 'lv-LV',
+        searchLabels: ['Vieta', 'Pilsēta', 'Ievākšanās diena', 'Izvākšanās diena', 'Viesi'],
+        searchPlaceholders: {
+            country: 'Izvēlieties valsti',
+            city: 'Izvēlieties pilsētu',
+            guests: 'Izvēlieties viesu skaitu'
+        },
+        guestOptions: ['1 viesis', '2 viesi', '3 viesi', '4 viesi', '5+ viesi'],
+        categoryLabels: ['Viss', 'Skats uz pilsētu', 'Dārzs', 'Ģimene', 'Luksusa numuri', 'Mājdzīvniekiem draudzīgs', 'Darba ceļojumiem', 'Spa'],
+        features: [
+            ['Pārbaudītas viesnīcas', 'Katrs piedāvājums tiek izvērtēts, lai viesiem būtu droša un patīkama uzturēšanās.'],
+            ['Skaidras cenas', 'Jūs redzat numura cenu pirms rezervācijas, bez mulsinošām slēptām izmaksām.'],
+            ['Viesu atsauksmes', 'Izvēlieties numuru, balstoties uz reāliem vērtējumiem un pieredzi.']
+        ],
+        aboutText: 'Mūsu mērķis ir padarīt viesnīcu rezervēšanu vienkāršu, saprotamu un patīkamu. Mēs palīdzam atrast piemērotu numuru, salīdzināt iespējas un droši pabeigt rezervāciju.',
+        aboutStats: ['Atlasīti piedāvājumi', 'Apmierināti viesi', 'Vidējais vērtējums', 'Klientu atbalsts'],
+        roomModal: {
+            beds: 'Gultas:',
+            category: 'Kategorija:',
+            amenities: 'Ērtības',
+            perNight: 'par nakti',
+            bookNow: 'Rezervēt tagad'
+        },
+        booking: {
+            title: 'Pabeigt rezervāciju',
+            selectedRoom: 'Izvēlētais numurs:',
+            fullName: 'Pilns vārds',
+            fullNamePlaceholder: 'Jūsu vārds un uzvārds',
+            email: 'E-pasts',
+            emailPlaceholder: 'jusuepasts@example.com',
+            phone: 'Tālrunis',
+            phonePlaceholder: '+371 XXXXXXXX',
+            checkin: 'Ievākšanās diena',
+            checkout: 'Izvākšanās diena',
+            guests: 'Viesu skaits',
+            terms: 'Piekrītu noteikumiem un nosacījumiem',
+            confirm: 'Apstiprināt rezervāciju'
+        },
+        success: {
+            title: 'Rezervācija apstiprināta!',
+            message: 'Paldies par jūsu rezervāciju!',
+            bookingId: 'Rezervācijas ID:',
+            backHome: 'Atgriezties uz sākumu'
+        },
+        footer: {
+            tagline: 'Vienkārša uzturēšanās, vienkārši rezervēta.',
+            quickLinks: 'Ātrās saites',
+            browseRooms: 'Pārlūkot numurus',
+            about: 'Par mums',
+            contact: 'Kontakti',
+            legal: 'Juridiskā informācija',
+            privacy: 'Privātuma politika',
+            terms: 'Pakalpojuma noteikumi',
+            follow: 'Seko mums',
+            copyright: '© 2026 Viesnīcu rezervācija. Visas tiesības aizsargātas.',
+            simpleCopyright: '© 2026 Viesnīcu rezervācija.'
+        },
+        auth: {
+            firstName: 'Vārds',
+            firstNamePlaceholder: 'Jūsu vārds',
+            email: 'E-pasts',
+            emailPlaceholder: 'jusu@epasts.lv',
+            password: 'Parole',
+            magicLink: 'Sūtīt pieslēgšanas saiti (bez paroles)',
+            loginNote: 'Pieslēgšanās ar e-pasta saiti ir izslēgta, lai neuzskrietu Supabase e-pastu limitam. Lietojiet e-pastu un paroli.',
+            openAdmin: 'Atvērt admin paneli'
+        },
+        admin: {
+            email: 'Admin e-pasts',
+            emailPlaceholder: 'admin@piemers.lv',
+            password: 'Parole',
+            helper: 'Šeit drīkst ienākt tikai konti, kuru e-pasts ir pievienots `admin_users` tabulai Supabase.',
+            signOut: 'Iziet',
+            reservations: 'Rezervācijas',
+            searches: 'Meklējumi',
+            blocked: 'Bloķētie datumi',
+            revenue: 'Kopējie ieņēmumi',
+            allReservations: 'Visas rezervācijas',
+            allSearches: 'Visi meklējumi',
+            availability: 'Numuru nepieejamība',
+            tableHeaders: [
+                ['ID', 'Vārds', 'E-pasts', 'Numurs', 'Ievākšanās', 'Izvākšanās', 'Viesi', 'Summa'],
+                ['Valsts', 'Pilsēta', 'Ievākšanās', 'Izvākšanās', 'Viesi', 'Izveidots'],
+                ['Numurs', 'No', 'Līdz', 'Piezīme']
+            ]
+        }
+    },
+    en: {
+        locale: 'en-GB',
+        searchLabels: ['Location', 'City', 'Check-in date', 'Check-out date', 'Guests'],
+        searchPlaceholders: {
+            country: 'Choose a country',
+            city: 'Choose a city',
+            guests: 'Choose guest count'
+        },
+        guestOptions: ['1 guest', '2 guests', '3 guests', '4 guests', '5+ guests'],
+        categoryLabels: ['All', 'City view', 'Garden', 'Family', 'Luxury rooms', 'Pet friendly', 'Business travel', 'Spa'],
+        features: [
+            ['Verified hotels', 'Every offer is reviewed so guests can enjoy a safe and pleasant stay.'],
+            ['Clear prices', 'You see the room price before booking, without confusing hidden costs.'],
+            ['Guest reviews', 'Choose a room based on real ratings and guest experiences.']
+        ],
+        aboutText: 'Our goal is to make hotel booking simple, clear, and enjoyable. We help you find the right room, compare options, and complete your reservation with confidence.',
+        aboutStats: ['Curated offers', 'Happy guests', 'Average rating', 'Customer support'],
+        roomModal: {
+            beds: 'Beds:',
+            category: 'Category:',
+            amenities: 'Amenities',
+            perNight: 'per night',
+            bookNow: 'Book now'
+        },
+        booking: {
+            title: 'Complete reservation',
+            selectedRoom: 'Selected room:',
+            fullName: 'Full name',
+            fullNamePlaceholder: 'Your full name',
+            email: 'Email',
+            emailPlaceholder: 'your@email.com',
+            phone: 'Phone',
+            phonePlaceholder: '+371 XXXXXXXX',
+            checkin: 'Check-in date',
+            checkout: 'Check-out date',
+            guests: 'Guest count',
+            terms: 'I agree to the terms and conditions',
+            confirm: 'Confirm reservation'
+        },
+        success: {
+            title: 'Reservation confirmed!',
+            message: 'Thank you for your reservation!',
+            bookingId: 'Reservation ID:',
+            backHome: 'Back to home'
+        },
+        footer: {
+            tagline: 'Simple stays, simply booked.',
+            quickLinks: 'Quick links',
+            browseRooms: 'Browse rooms',
+            about: 'About us',
+            contact: 'Contact',
+            legal: 'Legal',
+            privacy: 'Privacy policy',
+            terms: 'Terms of service',
+            follow: 'Follow us',
+            copyright: '© 2026 Hotel Booking. All rights reserved.',
+            simpleCopyright: '© 2026 Hotel Booking.'
+        },
+        auth: {
+            firstName: 'First name',
+            firstNamePlaceholder: 'Your first name',
+            email: 'Email',
+            emailPlaceholder: 'your@email.com',
+            password: 'Password',
+            magicLink: 'Send sign-in link (without password)',
+            loginNote: 'Email link sign-in is disabled to avoid hitting the Supabase email limit. Use your email and password instead.',
+            openAdmin: 'Open admin panel'
+        },
+        admin: {
+            email: 'Admin email',
+            emailPlaceholder: 'admin@example.com',
+            password: 'Password',
+            helper: 'Only accounts whose email is listed in the `admin_users` table in Supabase are allowed here.',
+            signOut: 'Sign out',
+            reservations: 'Reservations',
+            searches: 'Searches',
+            blocked: 'Blocked dates',
+            revenue: 'Total revenue',
+            allReservations: 'All reservations',
+            allSearches: 'All searches',
+            availability: 'Room availability blocks',
+            tableHeaders: [
+                ['ID', 'Name', 'Email', 'Room', 'Check-in', 'Check-out', 'Guests', 'Amount'],
+                ['Country', 'City', 'Check-in', 'Check-out', 'Guests', 'Created'],
+                ['Room', 'From', 'To', 'Note']
+            ]
+        }
     }
 };
 
@@ -269,6 +450,7 @@ function init() {
     resetBodyScroll();
     allRooms = [...rooms];
     ensureAuthEnhancements();
+    ensureMobileNavToggle();
     ensureHeaderControls();
     setupEventListeners();
     populateCountries();
@@ -338,6 +520,25 @@ function ensureHeaderControls() {
     }
 }
 
+function ensureMobileNavToggle() {
+    const navbarContent = document.querySelector('.navbar-content');
+    if (!navbarContent || document.getElementById('navToggle')) return;
+
+    const toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.id = 'navToggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-label', langText('Atvērt izvēlni', 'Open menu'));
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+    `;
+
+    navbarContent.appendChild(toggle);
+}
+
 function updateHeaderControlLabels() {
     setText('languageToggleValue', t('language'));
     setText('themeToggleValue', currentTheme === 'dark' ? t('themeDark') : t('themeLight'));
@@ -349,6 +550,53 @@ function updateHeaderControlLabels() {
 
 function t(key) {
     return translations[currentLanguage]?.[key] || translations.lv[key] || key;
+}
+
+function content() {
+    return localeContent[currentLanguage] || localeContent.lv;
+}
+
+function langText(lvText, enText) {
+    return currentLanguage === 'en' ? enText : lvText;
+}
+
+function setSelectorText(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+function setSelectorHtml(selector, value) {
+    const element = document.querySelector(selector);
+    if (element) {
+        element.innerHTML = value;
+    }
+}
+
+function setInputPlaceholder(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.placeholder = value;
+    }
+}
+
+function updateGuestSelect(selectId, placeholder, options) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+
+    const currentValue = select.value;
+    select.innerHTML = `<option value="">${placeholder}</option>`;
+    options.forEach((label, index) => {
+        const option = document.createElement('option');
+        option.value = String(index + 1);
+        option.textContent = label;
+        select.appendChild(option);
+    });
+
+    if ([...select.options].some(option => option.value === currentValue)) {
+        select.value = currentValue;
+    }
 }
 
 function applyLanguage(language) {
@@ -379,6 +627,7 @@ function toggleTheme() {
 }
 
 function translateStaticPage() {
+    const copy = content();
     const brandText = document.querySelector('.brand-text');
     if (brandText) brandText.textContent = t('brand');
 
@@ -406,12 +655,144 @@ function translateStaticPage() {
 
     const authFirstNameLabel = document.querySelector('#authFirstNameGroup label');
     const authFirstNameInput = document.getElementById('authFirstName');
-    if (authFirstNameLabel) authFirstNameLabel.textContent = currentLanguage === 'en' ? 'First name' : 'Vārds';
-    if (authFirstNameInput) authFirstNameInput.placeholder = currentLanguage === 'en' ? 'Your first name' : 'Jūsu vārds';
+    if (authFirstNameLabel) authFirstNameLabel.textContent = copy.auth.firstName;
+    if (authFirstNameInput) authFirstNameInput.placeholder = copy.auth.firstNamePlaceholder;
+
+    const searchLabels = document.querySelectorAll('.search-field label');
+    searchLabels.forEach((label, index) => {
+        if (copy.searchLabels[index]) {
+            label.textContent = copy.searchLabels[index];
+        }
+    });
+
+    updateGuestSelect('searchGuests', copy.searchPlaceholders.guests, copy.guestOptions);
+    updateGuestSelect('bookingGuests', copy.searchPlaceholders.guests, copy.guestOptions);
+
+    const categories = document.querySelectorAll('.category-btn');
+    categories.forEach((button, index) => {
+        if (copy.categoryLabels[index]) {
+            button.textContent = copy.categoryLabels[index];
+        }
+    });
+
+    const featureCards = document.querySelectorAll('.feature-card');
+    featureCards.forEach((card, index) => {
+        const cardContent = copy.features[index];
+        if (!cardContent) return;
+
+        const [title, description] = cardContent;
+        const heading = card.querySelector('h3');
+        const paragraph = card.querySelector('p');
+        if (heading) heading.textContent = title;
+        if (paragraph) paragraph.textContent = description;
+    });
+
+    const aboutParagraph = document.querySelector('.about-content > p');
+    if (aboutParagraph) {
+        aboutParagraph.textContent = copy.aboutText;
+    }
+
+    const stats = document.querySelectorAll('.stat p');
+    stats.forEach((stat, index) => {
+        if (copy.aboutStats[index]) {
+            stat.textContent = copy.aboutStats[index];
+        }
+    });
+
+    const modalInfoLabels = document.querySelectorAll('.modal-info strong');
+    if (modalInfoLabels[0]) modalInfoLabels[0].textContent = copy.roomModal.beds;
+    if (modalInfoLabels[1]) modalInfoLabels[1].textContent = copy.roomModal.category;
+    setSelectorText('#modalAmenities h3', copy.roomModal.amenities);
+    setSelectorText('#bookingBtn', copy.roomModal.bookNow);
+
+    const modalPrice = document.getElementById('modalPrice');
+    if (modalPrice?.parentElement) {
+        modalPrice.parentElement.innerHTML = `€<span id="modalPrice">${modalPrice.textContent}</span> ${copy.roomModal.perNight}`;
+    }
+
+    setSelectorText('#bookingModal h2', copy.booking.title);
+
+    const selectedRoomName = document.getElementById('selectedRoomName');
+    const selectedRoomPrice = document.getElementById('selectedRoomPrice');
+    const selectedRoomInfo = document.querySelector('.room-selection-info p');
+    if (selectedRoomInfo) {
+        selectedRoomInfo.innerHTML = `${copy.booking.selectedRoom} <strong id="selectedRoomName">${selectedRoomName?.textContent || ''}</strong> — <strong style="color: var(--primary);">€<span id="selectedRoomPrice">${selectedRoomPrice?.textContent || ''}</span>/${copy.roomModal.perNight}</strong>`;
+    }
+
+    const bookingLabels = document.querySelectorAll('#bookingForm label');
+    if (bookingLabels[0]) bookingLabels[0].textContent = copy.booking.fullName;
+    if (bookingLabels[1]) bookingLabels[1].textContent = copy.booking.email;
+    if (bookingLabels[2]) bookingLabels[2].textContent = copy.booking.phone;
+    if (bookingLabels[3]) bookingLabels[3].textContent = copy.booking.checkin;
+    if (bookingLabels[4]) bookingLabels[4].textContent = copy.booking.checkout;
+    if (bookingLabels[5]) bookingLabels[5].textContent = copy.booking.guests;
+    if (bookingLabels[6]) bookingLabels[6].textContent = copy.booking.terms;
+    setInputPlaceholder('guestName', copy.booking.fullNamePlaceholder);
+    setInputPlaceholder('guestEmail', copy.booking.emailPlaceholder);
+    setInputPlaceholder('guestPhone', copy.booking.phonePlaceholder);
+    setSelectorText('#bookingForm button[type="submit"]', copy.booking.confirm);
+
+    setSelectorText('#successModal h2', copy.success.title);
+    setText('successMessage', copy.success.message);
+    const bookingIdLabel = document.querySelector('.booking-id');
+    if (bookingIdLabel) {
+        const bookingId = document.getElementById('bookingId')?.textContent || '';
+        bookingIdLabel.innerHTML = `${copy.success.bookingId} <span id="bookingId">${bookingId}</span>`;
+    }
+    setSelectorText('#successModal .btn-primary', copy.success.backHome);
+
+    document.querySelectorAll('label[for="authEmail"]').forEach(label => {
+        label.textContent = copy.auth.email;
+    });
+    document.querySelectorAll('label[for="authPassword"]').forEach(label => {
+        label.textContent = copy.auth.password;
+    });
+    setInputPlaceholder('authEmail', copy.auth.emailPlaceholder);
+    setInputPlaceholder('authPassword', copy.auth.password);
+    setSelectorText('#magicLinkBtn', copy.auth.magicLink);
+    setSelectorText('.auth-helper-note', copy.auth.loginNote);
+    setSelectorText('#authAdminLink .btn-secondary', copy.auth.openAdmin);
+
+    const footerSections = document.querySelectorAll('.footer-section');
+    if (footerSections[0]) {
+        const title = footerSections[0].querySelector('h3');
+        const tagline = footerSections[0].querySelector('p');
+        if (title) title.textContent = t('brand');
+        if (tagline) tagline.textContent = copy.footer.tagline;
+    }
+    if (footerSections[1]) {
+        const heading = footerSections[1].querySelector('h4');
+        const links = footerSections[1].querySelectorAll('a');
+        if (heading) heading.textContent = copy.footer.quickLinks;
+        if (links[0]) links[0].textContent = copy.footer.browseRooms;
+        if (links[1]) links[1].textContent = copy.footer.about;
+        if (links[2]) links[2].textContent = copy.footer.contact;
+    }
+    if (footerSections[2]) {
+        const heading = footerSections[2].querySelector('h4');
+        const links = footerSections[2].querySelectorAll('a');
+        if (heading) heading.textContent = copy.footer.legal;
+        if (links[0]) links[0].textContent = copy.footer.privacy;
+        if (links[1]) links[1].textContent = copy.footer.terms;
+    }
+    if (footerSections[3]) {
+        const heading = footerSections[3].querySelector('h4');
+        if (heading) heading.textContent = copy.footer.follow;
+    }
+
+    const footerBottom = document.querySelector('.footer-bottom p');
+    if (footerBottom) {
+        footerBottom.textContent = copy.footer.copyright;
+    }
+
+    const simpleFooter = document.querySelector('.footer > .container > p');
+    if (simpleFooter) {
+        simpleFooter.textContent = copy.footer.simpleCopyright;
+    }
 
     const page = getCurrentPage();
 
-    if (page === 'home') {
+    if (page === 'home' || page === 'hero') {
         const heroTitle = document.querySelector('.hero-title');
         const heroSubtitle = document.querySelector('.hero-subtitle');
         const sectionTitles = document.querySelectorAll('.section-title');
@@ -425,6 +806,21 @@ function translateStaticPage() {
         if (sectionTitles[2]) sectionTitles[2].textContent = t('sectionAbout');
     }
 
+    if (page === 'stays') {
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) sectionTitle.textContent = t('sectionRooms');
+    }
+
+    if (page === 'features') {
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) sectionTitle.textContent = t('sectionFeatures');
+    }
+
+    if (page === 'about') {
+        const sectionTitle = document.querySelector('.section-title');
+        if (sectionTitle) sectionTitle.textContent = t('sectionAbout');
+    }
+
     if (page === 'auth') {
         const authHeading = document.querySelector('.auth-container h2');
         const signupBtn = document.getElementById('showSignup');
@@ -432,15 +828,15 @@ function translateStaticPage() {
         const submitBtn = document.getElementById('loginSubmit');
 
         if (authHeading && authMode !== 'signup') authHeading.textContent = t('login');
-        if (signupBtn) signupBtn.textContent = currentLanguage === 'en' ? 'Register' : 'Reģistrēties';
-        if (loginBtn) loginBtn.textContent = currentLanguage === 'en' ? 'Back to sign in' : 'Atpakaļ uz pieslēgšanos';
+        if (signupBtn) signupBtn.textContent = langText('Reģistrēties', 'Register');
+        if (loginBtn) loginBtn.textContent = langText('Atpakaļ uz pieslēgšanos', 'Back to sign in');
         if (submitBtn && authMode !== 'signup') submitBtn.textContent = t('login');
     }
 
     if (page === 'booking') {
         const bookingHeading = document.querySelector('main h2');
         if (bookingHeading) {
-            bookingHeading.textContent = currentLanguage === 'en' ? 'Complete reservation' : 'Pabeigt rezervāciju';
+            bookingHeading.textContent = copy.booking.title;
         }
     }
 
@@ -453,6 +849,10 @@ function translateStaticPage() {
         const adminSignedIn = document.querySelector('.admin-toolbar .auth-helper');
         const refreshBtn = document.getElementById('adminRefreshBtn');
         const loginBtn = document.getElementById('adminLoginSubmit');
+        const adminLabels = document.querySelectorAll('#adminLoginPanel label');
+        const adminHelper = document.querySelector('#adminLoginPanel .auth-helper');
+        const stats = document.querySelectorAll('.admin-stat-card span');
+        const sectionHeadings = document.querySelectorAll('.admin-section h3');
 
         if (sectionTitle) sectionTitle.textContent = t('adminTitle');
         if (adminKicker) adminKicker.textContent = t('adminOnly');
@@ -464,6 +864,31 @@ function translateStaticPage() {
         }
         if (refreshBtn) refreshBtn.textContent = t('adminRefresh');
         if (loginBtn) loginBtn.textContent = t('adminLoginBtn');
+        if (adminLabels[0]) adminLabels[0].textContent = copy.admin.email;
+        if (adminLabels[1]) adminLabels[1].textContent = copy.admin.password;
+        if (adminHelper) adminHelper.textContent = copy.admin.helper;
+        setInputPlaceholder('adminEmail', copy.admin.emailPlaceholder);
+        setInputPlaceholder('adminPassword', copy.auth.password);
+        setSelectorText('#adminSignOutBtn', copy.admin.signOut);
+        if (stats[0]) stats[0].textContent = copy.admin.reservations;
+        if (stats[1]) stats[1].textContent = copy.admin.searches;
+        if (stats[2]) stats[2].textContent = copy.admin.blocked;
+        if (stats[3]) stats[3].textContent = copy.admin.revenue;
+        if (sectionHeadings[0]) sectionHeadings[0].textContent = copy.admin.allReservations;
+        if (sectionHeadings[1]) sectionHeadings[1].textContent = copy.admin.allSearches;
+        if (sectionHeadings[2]) sectionHeadings[2].textContent = copy.admin.availability;
+
+        const tableHeads = document.querySelectorAll('.admin-table thead');
+        tableHeads.forEach((thead, index) => {
+            const headers = copy.admin.tableHeaders[index];
+            if (!headers) return;
+
+            thead.querySelectorAll('th').forEach((th, cellIndex) => {
+                if (headers[cellIndex]) {
+                    th.textContent = headers[cellIndex];
+                }
+            });
+        });
     }
 }
 
@@ -507,7 +932,7 @@ function openRoomModal(roomId) {
 
     const roomAvailability = document.getElementById('roomAvailability');
     if (roomAvailability) {
-        roomAvailability.textContent = getNextBlockedRangeLabel(roomId) || (currentLanguage === 'en' ? 'This room is currently available.' : 'Sis numurs paslaik ir pieejams.');
+        roomAvailability.textContent = getNextBlockedRangeLabel(roomId) || langText('Šis numurs pašlaik ir pieejams.', 'This room is currently available.');
     }
 
     showModal('roomModal');
@@ -519,7 +944,7 @@ function closeRoomModal() {
 
 function openBookingModal() {
     if (!currentRoom) {
-        alert('Ludzu, izvelieties numuru.');
+        alert(langText('Lūdzu, izvēlieties numuru.', 'Please choose a room.'));
         return;
     }
 
@@ -542,8 +967,8 @@ function showSuccessModal(bookingId, savedOnline) {
     setText(
         'successMessage',
         savedOnline
-            ? 'Rezervacija ir saglabata Supabase datubaze.'
-            : 'Rezervacija ir saglabata lokali. Lai saglabatu online, palaidiet Supabase tabulas no schema faila.'
+            ? langText('Rezervācija ir saglabāta Supabase datubāzē.', 'The reservation was saved to the Supabase database.')
+            : langText('Rezervācija ir saglabāta lokāli. Lai saglabātu to arī online, palaidiet Supabase tabulas no shēmas faila.', 'The reservation was saved locally. To save it online too, run the Supabase tables from the schema file.')
     );
 }
 
@@ -551,7 +976,7 @@ function populateCountries() {
     const countrySelect = document.getElementById('searchCountry');
     if (!countrySelect) return;
 
-    countrySelect.innerHTML = '<option value="">Izvelieties valsti</option>';
+    countrySelect.innerHTML = `<option value="">${content().searchPlaceholders.country}</option>`;
     Object.keys(countryCities).forEach(country => {
         const option = document.createElement('option');
         option.value = country;
@@ -565,7 +990,7 @@ function updateCities() {
     const citySelect = document.getElementById('searchCity');
     if (!countrySelect || !citySelect) return;
 
-    citySelect.innerHTML = '<option value="">Izvelieties pilsetu</option>';
+    citySelect.innerHTML = `<option value="">${content().searchPlaceholders.city}</option>`;
 
     (countryCities[countrySelect.value] || []).forEach(city => {
         const option = document.createElement('option');
@@ -583,12 +1008,12 @@ function handleSearch() {
     const guests = document.getElementById('searchGuests')?.value;
 
     if (!country || !city || !checkin || !checkout || !guests) {
-        alert('Ludzu, aizpildiet visus meklosanas laukus.');
+        alert(langText('Lūdzu, aizpildiet visus meklēšanas laukus.', 'Please fill in all search fields.'));
         return;
     }
 
     if (!isValidStayRange(checkin, checkout)) {
-        alert('Izvaksanas dienai jabut pec ievaksanas dienas.');
+        alert(langText('Izvākšanās dienai jābūt pēc ievākšanās dienas.', 'Check-out date must be after the check-in date.'));
         return;
     }
 
@@ -630,43 +1055,46 @@ async function submitBooking(event) {
     }
 
     if (!name || !email || !phone || !checkin || !checkout || !guests) {
-        alert('Ludzu, aizpildiet visus rezervacijas laukus.');
+        alert(langText('Lūdzu, aizpildiet visus rezervācijas laukus.', 'Please fill in all reservation fields.'));
         return;
     }
 
     if (!validateGuestName(name)) {
-        alert('Ludzu, ievadiet pilnu vardu un uzvardu, izmantojot tikai burtus.');
+        alert(langText('Lūdzu, ievadiet pilnu vārdu un uzvārdu, izmantojot tikai burtus.', 'Please enter your full name using letters only.'));
         return;
     }
 
     if (!validateEmail(email)) {
-        alert('Ludzu, ievadiet derigu e-pasta adresi.');
+        alert(langText('Lūdzu, ievadiet derīgu e-pasta adresi.', 'Please enter a valid email address.'));
         return;
     }
 
     if (!validatePhone(phone)) {
-        alert('Ludzu, ievadiet derigu talruna numuru.');
+        alert(langText('Lūdzu, ievadiet derīgu tālruņa numuru.', 'Please enter a valid phone number.'));
         return;
     }
 
     if (!validateGuestCount(guests)) {
-        alert('Ludzu, izvelieties derigu viesu skaitu.');
+        alert(langText('Lūdzu, izvēlieties derīgu viesu skaitu.', 'Please choose a valid guest count.'));
         return;
     }
 
     if (!isValidStayRange(checkin, checkout)) {
-        alert('Izvaksanas dienai jabut pec ievaksanas dienas.');
+        alert(langText('Izvākšanās dienai jābūt pēc ievākšanās dienas.', 'Check-out date must be after the check-in date.'));
         return;
     }
 
     if (!currentRoom) {
-        alert('Ludzu, izvelieties numuru.');
+        alert(langText('Lūdzu, izvēlieties numuru.', 'Please choose a room.'));
         return;
     }
 
     const conflictingRange = getConflictingBlockedRange(currentRoom.id, checkin, checkout);
     if (conflictingRange) {
-        alert(`Sis numurs nav pieejams no ${formatDate(conflictingRange.start_date)} lidz ${formatDate(conflictingRange.end_date)}.`);
+        alert(langText(
+            `Šis numurs nav pieejams no ${formatDate(conflictingRange.start_date)} līdz ${formatDate(conflictingRange.end_date)}.`,
+            `This room is unavailable from ${formatDate(conflictingRange.start_date)} to ${formatDate(conflictingRange.end_date)}.`
+        ));
         updateBookingAvailabilityNotice();
         return;
     }
@@ -676,7 +1104,7 @@ async function submitBooking(event) {
 
     if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = 'Saglabaju...';
+        submitButton.textContent = langText('Saglabāju...', 'Saving...');
     }
 
     const nights = Math.ceil((new Date(checkout) - new Date(checkin)) / MS_PER_DAY);
@@ -861,9 +1289,12 @@ function setupEventListeners() {
 
     document.getElementById('navToggle')?.addEventListener('click', () => {
         const nav = document.querySelector('.navbar-nav');
+        const navToggle = document.getElementById('navToggle');
         if (!nav) return;
 
         nav.classList.toggle('open');
+        navToggle?.classList.toggle('active', nav.classList.contains('open'));
+        navToggle?.setAttribute('aria-expanded', nav.classList.contains('open') ? 'true' : 'false');
     });
 
     document.querySelectorAll('.modal').forEach(modal => {
@@ -884,6 +1315,23 @@ function setupEventListeners() {
         const profileWrapper = document.getElementById('profileMenuWrapper');
         if (!profileWrapper || profileWrapper.contains(event.target)) return;
         closeProfileMenu();
+    });
+
+    document.addEventListener('click', event => {
+        const nav = document.querySelector('.navbar-nav');
+        const navToggle = document.getElementById('navToggle');
+        const navbarContent = document.querySelector('.navbar-content');
+        if (!nav?.classList.contains('open') || !navbarContent) return;
+        if (navbarContent.contains(event.target)) return;
+        closeMobileNav();
+        navToggle?.classList.remove('active');
+        navToggle?.setAttribute('aria-expanded', 'false');
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            closeMobileNav();
+        }
     });
 
     window.addEventListener('hashchange', hydratePageSectionFromHash);
@@ -956,6 +1404,8 @@ function hydratePageSectionFromHash() {
 
 function closeMobileNav() {
     document.querySelector('.navbar-nav')?.classList.remove('open');
+    document.getElementById('navToggle')?.classList.remove('active');
+    document.getElementById('navToggle')?.setAttribute('aria-expanded', 'false');
 }
 
 function initializeDateInputs() {
@@ -1137,12 +1587,14 @@ function setAuthMode(mode) {
 
     if (helper) {
         helper.textContent = mode === 'signup'
-            ? (currentLanguage === 'en'
-                ? 'Create your account with email and password. If Supabase asks for email confirmation, you need SMTP or disabled Confirm Email.'
-                : 'Izveidojiet kontu ar e-pastu un paroli. Ja Supabase prasa e-pasta apstiprinajumu, tam vajag SMTP vai izslegtu Confirm Email.')
-            : (currentLanguage === 'en'
-                ? 'Sign in to see your email in the reservation form.'
-                : 'Piesledzieties, lai redzetu savu e-pastu rezervacijas forma.');
+            ? langText(
+                'Izveidojiet kontu ar e-pastu un paroli. Ja Supabase prasa e-pasta apstiprinājumu, tam vajag SMTP vai izslēgtu Confirm Email.',
+                'Create your account with email and password. If Supabase asks for email confirmation, you need SMTP or disabled Confirm Email.'
+            )
+            : langText(
+                'Pieslēdzieties, lai redzētu savu e-pastu rezervācijas formā.',
+                'Sign in to see your email in the reservation form.'
+            );
     }
 
     setAuthStatus('');
@@ -1153,7 +1605,7 @@ async function submitAuthForm(event) {
 
     const client = window.supabaseClient;
     if (!client?.auth) {
-        setAuthStatus('Supabase nav ieladets. Parbaudiet skriptu un konfiguraciju.', true);
+        setAuthStatus(langText('Supabase nav ielādēts. Pārbaudiet skriptu un konfigurāciju.', 'Supabase is not loaded. Check the script and configuration.'), true);
         return;
     }
 
@@ -1162,12 +1614,12 @@ async function submitAuthForm(event) {
     const firstName = document.getElementById('authFirstName')?.value.trim();
 
     if (!email || !password) {
-        setAuthStatus('Ievadiet e-pastu un paroli.', true);
+        setAuthStatus(langText('Ievadiet e-pastu un paroli.', 'Enter your email and password.'), true);
         return;
     }
 
     if (authMode === 'signup' && !firstName) {
-        setAuthStatus('Ievadiet savu vardu.', true);
+        setAuthStatus(langText('Ievadiet savu vārdu.', 'Enter your first name.'), true);
         return;
     }
 
@@ -1176,7 +1628,9 @@ async function submitAuthForm(event) {
 
     if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = authMode === 'signup' ? 'Veidoju kontu...' : 'Piesledzu...';
+        submitButton.textContent = authMode === 'signup'
+            ? langText('Veidoju kontu...', 'Creating account...')
+            : langText('Pieslēdzu...', 'Signing in...');
     }
 
     try {
@@ -1192,12 +1646,12 @@ async function submitAuthForm(event) {
                 }
             });
             if (error) throw error;
-            setAuthStatus('Konts izveidots. Ja Supabase prasa apstiprinajumu, parbaudiet e-pastu.');
+            setAuthStatus(langText('Konts izveidots. Ja Supabase prasa apstiprinājumu, pārbaudiet e-pastu.', 'Account created. If Supabase asks for confirmation, check your email.'));
             setAuthMode('login');
         } else {
             const { error } = await client.auth.signInWithPassword({ email, password });
             if (error) throw error;
-            setAuthStatus('Pieslegsanas izdevusies.');
+            setAuthStatus(langText('Pieslēgšanās izdevusies.', 'Sign-in successful.'));
             hideAuthModal();
             redirectAfterAuth();
         }
@@ -1218,7 +1672,7 @@ async function signOutUser() {
 
     const { error } = await client.auth.signOut();
     if (error) {
-        alert(error.message || 'Neizdevas atslegties.');
+        alert(error.message || langText('Neizdevās izrakstīties.', 'Could not sign out.'));
         return;
     }
 
@@ -1241,7 +1695,7 @@ function updateAuthButton(user) {
     } else {
         authBtn.classList.remove('profile-trigger');
         authBtn.classList.add('btn-link');
-        authBtn.textContent = 'Pieslegties';
+        authBtn.textContent = t('login');
         closeProfileMenu();
     }
 }
@@ -1258,7 +1712,24 @@ async function syncAuthScreens() {
 }
 
 function getCurrentPage() {
-    return document.body?.dataset?.page || '';
+    const explicitPage = document.body?.dataset?.page;
+    if (explicitPage) return explicitPage;
+
+    const fileName = window.location.pathname.split('/').pop() || 'index.html';
+    const pageMap = {
+        '': 'home',
+        'index.html': 'home',
+        'hero.html': 'hero',
+        'categories.html': 'stays',
+        'stays.html': 'stays',
+        'features.html': 'features',
+        'about.html': 'about',
+        'booking.html': 'booking',
+        'auth.html': 'auth',
+        'admin.html': 'admin'
+    };
+
+    return pageMap[fileName] || '';
 }
 
 function getPostAuthRedirect() {
@@ -1292,8 +1763,8 @@ function ensureAuthFirstNameField() {
     firstGroup.id = 'authFirstNameGroup';
     firstGroup.style.display = 'none';
     firstGroup.innerHTML = `
-        <label for="authFirstName">Vards</label>
-        <input type="text" id="authFirstName" placeholder="Jusu vards">
+        <label for="authFirstName">${content().auth.firstName}</label>
+        <input type="text" id="authFirstName" placeholder="${content().auth.firstNamePlaceholder}">
     `;
 
     const emailGroup = document.getElementById('authEmail')?.closest('.form-group');
@@ -1383,9 +1854,9 @@ function getUserFirstName(user) {
         return String(fromMeta).trim().split(/\s+/)[0];
     }
 
-    const fromEmail = user?.email ? user.email.split('@')[0] : 'Profils';
+    const fromEmail = user?.email ? user.email.split('@')[0] : t('profileLabel');
     const cleaned = fromEmail.replace(/[._-]+/g, ' ').trim();
-    return cleaned ? cleaned.charAt(0).toUpperCase() + cleaned.slice(1).split(/\s+/)[0] : 'Profils';
+    return cleaned ? cleaned.charAt(0).toUpperCase() + cleaned.slice(1).split(/\s+/)[0] : t('profileLabel');
 }
 
 function showProfileOverviewModal() {
@@ -1466,15 +1937,24 @@ function getReadableAuthError(error, mode) {
 
     if (message.includes('email rate limit exceeded') || message.includes('over_email_send_rate_limit')) {
         return mode === 'signup'
-            ? 'Supabase e-pastu limits ir sasniegts. Login ar paroli turpinas stradat, bet jaunam registracijam vajag SMTP vai izslegtu Confirm Email Supabase paneli.'
-            : 'Supabase e-pastu limits ir sasniegts. Ludzu izmantojiet pieslegsanos ar paroli un nelietojiet e-pasta saites.';
+            ? langText(
+                'Supabase e-pastu limits ir sasniegts. Pieslēgšanās ar paroli turpinās strādāt, bet jaunām reģistrācijām vajag SMTP vai izslēgtu Confirm Email Supabase panelī.',
+                'The Supabase email limit has been reached. Password sign-in still works, but new signups need SMTP or Confirm Email disabled in Supabase.'
+            )
+            : langText(
+                'Supabase e-pastu limits ir sasniegts. Lūdzu izmantojiet pieslēgšanos ar paroli un nelietojiet e-pasta saites.',
+                'The Supabase email limit has been reached. Please use password sign-in and avoid email links.'
+            );
     }
 
     if (message.includes('email not confirmed')) {
-        return 'Sis konts vel nav apstiprinats ar e-pastu. Lai registracija darbotos bez e-pastiem, Supabase paneli vajadzes izslegt Confirm Email vai pieslegt SMTP.';
+        return langText(
+            'Šis konts vēl nav apstiprināts ar e-pastu. Lai reģistrācija darbotos bez e-pastiem, Supabase panelī vajadzēs izslēgt Confirm Email vai pieslēgt SMTP.',
+            'This account has not been confirmed by email yet. To make signup work without emails, disable Confirm Email in Supabase or connect SMTP.'
+        );
     }
 
-    return error?.message || 'Autentifikacijas kluda.';
+    return error?.message || langText('Autentifikācijas kļūda.', 'Authentication error.');
 }
 
 async function initializeAdminPage() {
@@ -1490,11 +1970,11 @@ async function initializeAdminPage() {
     signOutBtn?.addEventListener('click', async () => {
         await signOutUser();
         renderAdminAccess(false);
-        setAdminStatus('Jus esat atslegts.');
+        setAdminStatus(langText('Jūs esat izrakstīts.', 'You have been signed out.'));
     });
 
     if (!client?.auth) {
-        setAdminStatus('Supabase nav ieladets. Admin pieslegsanas nav pieejama.', true);
+        setAdminStatus(langText('Supabase nav ielādēts. Admin pieslēgšanās nav pieejama.', 'Supabase is not loaded. Admin sign-in is unavailable.'), true);
         renderAdminAccess(false);
         return;
     }
@@ -1505,7 +1985,7 @@ async function initializeAdminPage() {
 
     if (!authUser) {
         renderAdminAccess(false);
-        setAdminStatus('Ievadiet admin e-pastu un paroli.');
+        setAdminStatus(langText('Ievadiet admin e-pastu un paroli.', 'Enter the admin email and password.'));
         return;
     }
 
@@ -1513,7 +1993,7 @@ async function initializeAdminPage() {
     if (!isAdmin) {
         await signOutUser();
         renderAdminAccess(false);
-        setAdminStatus('Sis konts nav admin konts.', true);
+        setAdminStatus(langText('Šis konts nav admin konts.', 'This account is not an admin account.'), true);
         return;
     }
 
@@ -1526,7 +2006,7 @@ async function submitAdminLogin(event) {
 
     const client = window.supabaseClient;
     if (!client?.auth) {
-        setAdminStatus('Supabase nav ieladets.', true);
+        setAdminStatus(langText('Supabase nav ielādēts.', 'Supabase is not loaded.'), true);
         return;
     }
 
@@ -1536,13 +2016,13 @@ async function submitAdminLogin(event) {
     const originalText = submitButton?.textContent;
 
     if (!email || !password) {
-        setAdminStatus('Ievadiet admin e-pastu un paroli.', true);
+        setAdminStatus(langText('Ievadiet admin e-pastu un paroli.', 'Enter the admin email and password.'), true);
         return;
     }
 
     if (submitButton) {
         submitButton.disabled = true;
-        submitButton.textContent = 'Parbaudu...';
+        submitButton.textContent = langText('Pārbaudu...', 'Checking...');
     }
 
     try {
@@ -1556,7 +2036,7 @@ async function submitAdminLogin(event) {
         if (!isAdmin) {
             await signOutUser();
             renderAdminAccess(false);
-            setAdminStatus('Pieslegsanas izdevusies, bet sis lietotajs nav admins.', true);
+            setAdminStatus(langText('Pieslēgšanās izdevusies, bet šis lietotājs nav admins.', 'Sign-in succeeded, but this user is not an admin.'), true);
             return;
         }
 
@@ -1615,7 +2095,7 @@ async function loadAdminDashboard() {
     const client = window.supabaseClient;
     if (!client) return;
 
-    setAdminStatus('Ieladeju rezervacijas...');
+    setAdminStatus(langText('Ielādēju rezervācijas...', 'Loading reservations...'));
 
     try {
         const [{ data: bookings, error: bookingsError }, { data: searches, error: searchesError }, { data: blocked, error: blockedError }] = await Promise.all([
@@ -1632,10 +2112,13 @@ async function loadAdminDashboard() {
         renderAdminTable('adminBookingsTable', bookings || [], createBookingRow, 8);
         renderAdminTable('adminSearchesTable', searches || [], createSearchRow, 6);
         renderAdminTable('adminBlockedTable', blocked || [], createBlockedRow, 4);
-        setAdminStatus(`Ieladiti dati: ${bookings?.length || 0} rezervacijas.`);
+        setAdminStatus(langText(
+            `Ielādīti dati: ${bookings?.length || 0} rezervācijas.`,
+            `Loaded data: ${bookings?.length || 0} reservations.`
+        ));
     } catch (error) {
         console.error('Admin dashboard error:', error);
-        setAdminStatus(error.message || 'Neizdevas ieladet admin datus.', true);
+        setAdminStatus(error.message || langText('Neizdevās ielādēt admin datus.', 'Could not load admin data.'), true);
     }
 }
 
@@ -1653,7 +2136,7 @@ function renderAdminTable(tableBodyId, rows, rowRenderer, columnCount) {
     if (!tableBody) return;
 
     if (!rows.length) {
-        tableBody.innerHTML = `<tr><td colspan="${columnCount}">Nav datu.</td></tr>`;
+        tableBody.innerHTML = `<tr><td colspan="${columnCount}">${langText('Nav datu.', 'No data.')}</td></tr>`;
         return;
     }
 
@@ -1689,12 +2172,16 @@ function createSearchRow(search) {
 }
 
 function createBlockedRow(entry) {
+    const localizedNote = entry.note === 'Pilns numurs'
+        ? langText('Pilns numurs', 'Fully booked')
+        : entry.note;
+
     return `
         <tr>
             <td>${escapeHtml(String(entry.room_id))}</td>
             <td>${formatDate(entry.start_date)}</td>
             <td>${formatDate(entry.end_date)}</td>
-            <td>${escapeHtml(entry.note || '')}</td>
+            <td>${escapeHtml(localizedNote || '')}</td>
         </tr>
     `;
 }
@@ -1711,7 +2198,7 @@ function setAdminStatus(message, isError = false) {
 }
 
 function formatDateTime(value) {
-    return new Date(value).toLocaleString('lv-LV', {
+    return new Date(value).toLocaleString(content().locale, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -1817,7 +2304,7 @@ function updateBookingAvailabilityNotice() {
     if (!notice || !currentRoom || !checkin || !checkout) return;
 
     if (!isValidStayRange(checkin, checkout)) {
-        notice.textContent = 'Izvelieties derigu datumdiapazonu.';
+        notice.textContent = langText('Izvēlieties derīgu datumu diapazonu.', 'Choose a valid date range.');
         notice.className = 'availability-note error';
         if (submitButton) submitButton.disabled = true;
         return;
@@ -1825,13 +2312,16 @@ function updateBookingAvailabilityNotice() {
 
     const conflict = getConflictingBlockedRange(currentRoom.id, checkin, checkout);
     if (conflict) {
-        notice.textContent = `Sis numurs nav pieejams no ${formatDate(conflict.start_date)} lidz ${formatDate(conflict.end_date)}.`;
+        notice.textContent = langText(
+            `Šis numurs nav pieejams no ${formatDate(conflict.start_date)} līdz ${formatDate(conflict.end_date)}.`,
+            `This room is unavailable from ${formatDate(conflict.start_date)} to ${formatDate(conflict.end_date)}.`
+        );
         notice.className = 'availability-note error';
         if (submitButton) submitButton.disabled = true;
         return;
     }
 
-    notice.textContent = 'Izveletie datumi ir pieejami rezervacijai.';
+    notice.textContent = langText('Izvēlētie datumi ir pieejami rezervācijai.', 'The selected dates are available for booking.');
     notice.className = 'availability-note success';
     if (submitButton) submitButton.disabled = false;
 }
@@ -1866,7 +2356,7 @@ function isValidStayRange(checkin, checkout) {
 }
 
 function formatDate(value) {
-    return new Date(value).toLocaleDateString('lv-LV', {
+    return new Date(value).toLocaleDateString(content().locale, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit'
