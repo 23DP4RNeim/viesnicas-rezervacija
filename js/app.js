@@ -630,13 +630,14 @@ function applyTheme(theme) {
 }
 
 function toggleLanguage() {
+    const isRoomModalOpen = document.getElementById('roomModal')?.classList.contains('active');
     applyLanguage(currentLanguage === 'lv' ? 'en' : 'lv');
     updateHeaderControlLabels();
     populateCountries();
     updateCities();
     translateStaticPage();
     renderCurrentCategoryRooms();
-    if (currentRoom) {
+    if (currentRoom && isRoomModalOpen) {
         openRoomModal(currentRoom.id);
     }
 }
@@ -1178,7 +1179,7 @@ async function saveBookingToSupabase(booking) {
     if (!client) return false;
 
     const user = client.auth.getUser ? (await client.auth.getUser()).data?.user : null;
-    const insertObj = {
+    const primaryInsert = {
         id: booking.id,
         guest_name: booking.name,
         guest_email: booking.email,
@@ -1195,13 +1196,49 @@ async function saveBookingToSupabase(booking) {
     };
 
     if (user?.id) {
-        insertObj.user_id = user.id;
+        primaryInsert.user_id = user.id;
     }
 
-    const { error } = await client.from('bookings').insert([insertObj]);
-    if (error) throw error;
+    const { error: primaryError } = await client.from('bookings').insert([primaryInsert]);
+    if (!primaryError) {
+        return true;
+    }
+
+    if (!shouldRetryBookingInsert(primaryError)) {
+        throw primaryError;
+    }
+
+    const legacyInsert = {
+        checkin: booking.checkin,
+        checkout: booking.checkout,
+        guests: booking.guests,
+        room_id: booking.roomId,
+        total_price: booking.totalPrice,
+        created_at: booking.date
+    };
+
+    if (user?.id) {
+        legacyInsert.user_id = user.id;
+    }
+
+    const { error: legacyError } = await client.from('bookings').insert([legacyInsert]);
+    if (legacyError) {
+        throw legacyError;
+    }
 
     return true;
+}
+
+function shouldRetryBookingInsert(error) {
+    const code = String(error?.code || '');
+    const message = String(error?.message || '').toLowerCase();
+
+    return code === 'PGRST204'
+        || code === '42703'
+        || code === '22P02'
+        || message.includes('schema cache')
+        || message.includes('column bookings.')
+        || message.includes('invalid input syntax for type uuid');
 }
 
 function updateBookingSummary() {
@@ -1908,6 +1945,9 @@ async function showReservationsOverviewModal() {
 
 async function loadUserReservations() {
     const client = window.supabaseClient;
+    const local = JSON.parse(localStorage.getItem('bookings') || '[]');
+    const localReservations = local.filter(booking => booking.email === authUser?.email);
+    let remoteReservations = [];
 
     if (client && authUser?.id) {
         try {
@@ -1918,14 +1958,13 @@ async function loadUserReservations() {
                 .order('created_at', { ascending: false });
 
             if (error) throw error;
-            return data || [];
+            remoteReservations = data || [];
         } catch (error) {
             console.warn('Could not load reservations from Supabase:', error);
         }
     }
 
-    const local = JSON.parse(localStorage.getItem('bookings') || '[]');
-    return local.filter(booking => booking.email === authUser?.email);
+    return dedupeReservations([...remoteReservations, ...localReservations]);
 }
 
 function renderUserReservations(reservations) {
@@ -1940,15 +1979,48 @@ function renderUserReservations(reservations) {
     list.innerHTML = reservations.map(booking => `
         <article class="reservation-card">
             <div class="reservation-card-head">
-                <h3>${escapeHtml(booking.room_name || booking.room || t('roomLabel'))}</h3>
-                <span class="reservation-total">EUR ${Number(booking.total_price || 0).toFixed(2)}</span>
+                <h3>${escapeHtml(getReservationRoomLabel(booking))}</h3>
+                <span class="reservation-total">EUR ${Number(booking.total_price || booking.totalPrice || 0).toFixed(2)}</span>
             </div>
-            <p><strong>ID:</strong> ${escapeHtml(booking.id || '-')}</p>
+            <p><strong>ID:</strong> ${escapeHtml(booking.id || booking.local_id || '-')}</p>
             <p><strong>${t('bookingDates')}</strong> ${formatDate(booking.checkin)} - ${formatDate(booking.checkout)}</p>
             <p><strong>${t('bookingGuests')}</strong> ${escapeHtml(String(booking.guests || '-'))}</p>
             <p><strong>${t('bookedAt')}</strong> ${formatDateTime(booking.created_at || booking.date || new Date().toISOString())}</p>
         </article>
     `).join('');
+}
+
+function getReservationRoomLabel(booking) {
+    if (booking.room_name) return booking.room_name;
+    if (booking.room) return booking.room;
+
+    const matchedRoom = rooms.find(room => Number(room.id) === Number(booking.room_id || booking.roomId));
+    return matchedRoom ? getLocalizedRoom(matchedRoom).name : t('roomLabel');
+}
+
+function dedupeReservations(reservations) {
+    const seen = new Set();
+
+    return reservations
+        .filter(Boolean)
+        .sort((a, b) => new Date(b.created_at || b.date || 0) - new Date(a.created_at || a.date || 0))
+        .filter(reservation => {
+            const key = [
+                reservation.room_id || reservation.roomId || reservation.room_name || reservation.room || '',
+                reservation.checkin || '',
+                reservation.checkout || '',
+                reservation.guests || '',
+                reservation.total_price || reservation.totalPrice || '',
+                reservation.created_at || reservation.date || ''
+            ].join('|');
+
+            if (seen.has(key)) {
+                return false;
+            }
+
+            seen.add(key);
+            return true;
+        });
 }
 
 function getReadableAuthError(error, mode) {
