@@ -32,15 +32,15 @@
             <p class="availability-note" id="bookingAvailabilityNotice"></p>
             <div class="form-group">
                 <label for="guestName">Pilns vārds</label>
-                <input type="text" id="guestName" placeholder="Jūsu vārds un uzvārds" required>
+                <input type="text" id="guestName" placeholder="Jūsu vārds un uzvārds" autocomplete="name" minlength="3" maxlength="80" pattern="[A-Za-zĀ-ž' -]{3,80}" required>
             </div>
             <div class="form-group">
                 <label for="guestEmail">E-pasts</label>
-                <input type="email" id="guestEmail" placeholder="jusuepasts@example.com" required>
+                <input type="email" id="guestEmail" placeholder="jusuepasts@example.com" autocomplete="email" maxlength="120" required>
             </div>
             <div class="form-group">
                 <label for="guestPhone">Tālrunis</label>
-                <input type="tel" id="guestPhone" placeholder="+371 XXXXXXXX" required>
+                <input type="tel" id="guestPhone" placeholder="+371 XXXXXXXX" autocomplete="tel" inputmode="tel" minlength="8" maxlength="20" pattern="^\+?[0-9 ]{8,20}$" required>
             </div>
             <div class="form-group">
                 <label for="bookingCheckin">Ievākšanās diena</label>

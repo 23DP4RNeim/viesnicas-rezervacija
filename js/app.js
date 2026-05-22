@@ -308,6 +308,9 @@ function filterByCategory(category) {
 async function submitBooking(event) {
     event.preventDefault();
 
+    const bookingForm = document.getElementById('bookingForm');
+    if (!bookingForm) return;
+
     const name = document.getElementById('guestName')?.value.trim();
     const email = document.getElementById('guestEmail')?.value.trim();
     const phone = document.getElementById('guestPhone')?.value.trim();
@@ -315,13 +318,32 @@ async function submitBooking(event) {
     const checkout = document.getElementById('bookingCheckout')?.value;
     const guests = document.getElementById('bookingGuests')?.value;
 
+    if (!bookingForm.reportValidity()) {
+        return;
+    }
+
     if (!name || !email || !phone || !checkin || !checkout || !guests) {
         alert('Ludzu, aizpildiet visus rezervacijas laukus.');
         return;
     }
 
+    if (!validateGuestName(name)) {
+        alert('Ludzu, ievadiet pilnu vardu un uzvardu, izmantojot tikai burtus.');
+        return;
+    }
+
     if (!validateEmail(email)) {
         alert('Ludzu, ievadiet derigu e-pasta adresi.');
+        return;
+    }
+
+    if (!validatePhone(phone)) {
+        alert('Ludzu, ievadiet derigu talruna numuru.');
+        return;
+    }
+
+    if (!validateGuestCount(guests)) {
+        alert('Ludzu, izvelieties derigu viesu skaitu.');
         return;
     }
 
@@ -375,7 +397,6 @@ async function submitBooking(event) {
         savedOnline = await saveBookingToSupabase(booking);
     } catch (error) {
         console.error('Neizdevas saglabat rezervaciju Supabase:', error);
-        alert('Rezervacija ir saglabata lokali, bet Supabase saglabasana neizdevas.');
     } finally {
         if (submitButton) {
             submitButton.disabled = false;
@@ -440,6 +461,30 @@ function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function validateGuestName(name) {
+    return /^[A-Za-zĀ-ž' -]{3,80}$/.test(name) && name.trim().includes(' ');
+}
+
+function validatePhone(phone) {
+    return /^\+?[0-9 ]{8,20}$/.test(phone);
+}
+
+function validateGuestCount(guests) {
+    return ['1', '2', '3', '4', '5'].includes(String(guests));
+}
+
+function sanitizeGuestNameInput(event) {
+    const input = event.target;
+    input.value = input.value.replace(/[^A-Za-zĀ-ž' -]/g, '').replace(/\s{2,}/g, ' ');
+}
+
+function sanitizeGuestPhoneInput(event) {
+    const input = event.target;
+    let cleaned = input.value.replace(/[^0-9+ ]/g, '');
+    cleaned = cleaned.replace(/(?!^)\+/g, '').replace(/\s{2,}/g, ' ');
+    input.value = cleaned;
+}
+
 function goHome(event) {
     if (event) event.preventDefault();
 
@@ -474,6 +519,8 @@ function setupEventListeners() {
     document.getElementById('bookingForm')?.addEventListener('submit', submitBooking);
     document.getElementById('bookingCheckin')?.addEventListener('change', updateBookingAvailabilityNotice);
     document.getElementById('bookingCheckout')?.addEventListener('change', updateBookingAvailabilityNotice);
+    document.getElementById('guestName')?.addEventListener('input', sanitizeGuestNameInput);
+    document.getElementById('guestPhone')?.addEventListener('input', sanitizeGuestPhoneInput);
     document.getElementById('authBtn')?.addEventListener('click', handleAuthButtonClick);
     document.getElementById('profileOverviewBtn')?.addEventListener('click', event => {
         event.preventDefault();
@@ -513,10 +560,6 @@ function setupEventListeners() {
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', event => {
             if (event.target !== modal) return;
-            if (modal.id === 'successModal') {
-                goHome();
-                return;
-            }
             hideModal(modal.id);
         });
     });
@@ -686,7 +729,9 @@ async function initializeAuth() {
         authUser = session?.user || null;
         updateAuthButton(authUser);
         prefillBookingUserData();
-        syncAuthScreens();
+        syncAuthScreens().catch(error => {
+            console.warn('Could not refresh auth screen state:', error);
+        });
     });
 
     try {
@@ -694,7 +739,7 @@ async function initializeAuth() {
         authUser = data?.user || null;
         updateAuthButton(authUser);
         prefillBookingUserData();
-        syncAuthScreens();
+        await syncAuthScreens();
     } catch (_error) {
         updateAuthButton(null);
     }
@@ -704,12 +749,10 @@ function wireAuthForms() {
     const loginForm = document.getElementById('loginForm');
     const showSignup = document.getElementById('showSignup');
     const showLogin = document.getElementById('showLogin');
-    const magicLinkBtn = document.getElementById('magicLinkBtn');
 
     loginForm?.addEventListener('submit', submitAuthForm);
     showSignup?.addEventListener('click', () => setAuthMode('signup'));
     showLogin?.addEventListener('click', () => setAuthMode('login'));
-    magicLinkBtn?.addEventListener('click', sendMagicLink);
 
     setAuthMode('login');
 }
@@ -718,6 +761,13 @@ function handleAuthButtonClick(event) {
     if (authUser) {
         event.preventDefault();
         toggleProfileMenu();
+        return;
+    }
+
+    if (getCurrentPage() === 'admin') {
+        event.preventDefault();
+        renderAdminAccess(false);
+        document.getElementById('adminEmail')?.focus();
         return;
     }
 
@@ -774,7 +824,7 @@ function setAuthMode(mode) {
 
     if (helper) {
         helper.textContent = mode === 'signup'
-            ? 'Izveidojiet kontu, lai rezervacijas butu piesaistitas jusu profilam.'
+            ? 'Izveidojiet kontu ar e-pastu un paroli. Ja Supabase prasa e-pasta apstiprinajumu, tam vajag SMTP vai izslegtu Confirm Email.'
             : 'Piesledzieties, lai redzetu savu e-pastu rezervacijas forma.';
     }
 
@@ -836,41 +886,13 @@ async function submitAuthForm(event) {
         }
     } catch (error) {
         console.error('Auth error:', error);
-        setAuthStatus(error.message || 'Autentifikacijas kluda.', true);
+        setAuthStatus(getReadableAuthError(error, authMode), true);
     } finally {
         if (submitButton) {
             submitButton.disabled = false;
             submitButton.textContent = originalText;
         }
     }
-}
-
-async function sendMagicLink() {
-    const client = window.supabaseClient;
-    if (!client?.auth) {
-        setAuthStatus('Supabase nav ieladets.', true);
-        return;
-    }
-
-    const email = document.getElementById('authEmail')?.value.trim();
-    if (!email) {
-        setAuthStatus('Ievadiet e-pastu, lai nosutitu pieslegsanas saiti.', true);
-        return;
-    }
-
-    const { error } = await client.auth.signInWithOtp({
-        email,
-        options: {
-            emailRedirectTo: `${window.location.origin}${window.location.pathname.replace(/[^/]+$/, 'index.html')}`
-        }
-    });
-
-    if (error) {
-        setAuthStatus(error.message || 'Neizdevas nosutit saiti.', true);
-        return;
-    }
-
-    setAuthStatus('Pieslegsanas saite ir nosutita uz jusu e-pastu.');
 }
 
 async function signOutUser() {
@@ -907,12 +929,13 @@ function updateAuthButton(user) {
     }
 }
 
-function syncAuthScreens() {
+async function syncAuthScreens() {
     const page = getCurrentPage();
     if (page === 'auth') {
         const adminEntry = document.getElementById('authAdminLink');
         if (adminEntry) {
-            adminEntry.style.display = authUser ? 'block' : 'none';
+            const canOpenAdmin = authUser ? await isAdminUser(authUser) : false;
+            adminEntry.style.display = canOpenAdmin ? 'block' : 'none';
         }
     }
 }
@@ -979,9 +1002,9 @@ function ensureProfileMenuMarkup() {
     menu.className = 'profile-menu';
     menu.id = 'profileMenu';
     menu.innerHTML = `
-        <button type="button" class="profile-menu-item" id="profileReservationsBtn">Overview reservations</button>
-        <button type="button" class="profile-menu-item" id="profileOverviewBtn">Profile overview</button>
-        <button type="button" class="profile-menu-item danger" id="profileSignOutBtn">Sign out</button>
+        <button type="button" class="profile-menu-item" id="profileReservationsBtn">Rezervāciju pārskats</button>
+        <button type="button" class="profile-menu-item" id="profileOverviewBtn">Profila pārskats</button>
+        <button type="button" class="profile-menu-item danger" id="profileSignOutBtn">Izrakstīties</button>
     `;
 
     wrapper.appendChild(menu);
@@ -994,7 +1017,7 @@ function ensureProfileModals() {
                 <div class="modal-content modal-sm">
                     <button class="modal-close" type="button" onclick="hideModal('profileOverviewModal')">&times;</button>
                     <div class="modal-body">
-                        <h2>Profile overview</h2>
+                        <h2>Profila pārskats</h2>
                         <div class="profile-card">
                             <div class="profile-avatar-large">👤</div>
                             <div class="profile-card-content">
@@ -1015,9 +1038,9 @@ function ensureProfileModals() {
                 <div class="modal-content modal-large">
                     <button class="modal-close" type="button" onclick="hideModal('reservationsOverviewModal')">&times;</button>
                     <div class="modal-body">
-                        <h2>Overview reservations</h2>
+                        <h2>Rezervāciju pārskats</h2>
                         <div class="profile-reservations-list" id="profileReservationsList">
-                            <p>Loading...</p>
+                            <p>Ielādē...</p>
                         </div>
                     </div>
                 </div>
@@ -1056,8 +1079,8 @@ function showProfileOverviewModal() {
     setText(
         'profileOverviewMemberSince',
         authUser.created_at
-            ? `Member since ${formatDateTime(authUser.created_at)}`
-            : 'Member since -'
+            ? `Konts izveidots: ${formatDateTime(authUser.created_at)}`
+            : 'Konts izveidots: -'
     );
     showModal('profileOverviewModal');
 }
@@ -1067,7 +1090,7 @@ async function showReservationsOverviewModal() {
 
     const list = document.getElementById('profileReservationsList');
     if (list) {
-        list.innerHTML = '<p>Loading reservations...</p>';
+        list.innerHTML = '<p>Ielādē rezervācijas...</p>';
     }
 
     showModal('reservationsOverviewModal');
@@ -1103,7 +1126,7 @@ function renderUserReservations(reservations) {
     if (!list) return;
 
     if (!reservations.length) {
-        list.innerHTML = '<p>There are no reservations on this profile yet.</p>';
+        list.innerHTML = '<p>Šim profilam vēl nav rezervāciju.</p>';
         return;
     }
 
@@ -1114,10 +1137,27 @@ function renderUserReservations(reservations) {
                 <span class="reservation-total">EUR ${Number(booking.total_price || 0).toFixed(2)}</span>
             </div>
             <p><strong>ID:</strong> ${escapeHtml(booking.id || '-')}</p>
-            <p><strong>Dates:</strong> ${formatDate(booking.checkin)} - ${formatDate(booking.checkout)}</p>
-            <p><strong>Guests:</strong> ${escapeHtml(String(booking.guests || '-'))}</p>
+            <p><strong>Datumi:</strong> ${formatDate(booking.checkin)} - ${formatDate(booking.checkout)}</p>
+            <p><strong>Viesi:</strong> ${escapeHtml(String(booking.guests || '-'))}</p>
+            <p><strong>Rezervēts:</strong> ${formatDateTime(booking.created_at || booking.date || new Date().toISOString())}</p>
         </article>
     `).join('');
+}
+
+function getReadableAuthError(error, mode) {
+    const message = String(error?.message || '').toLowerCase();
+
+    if (message.includes('email rate limit exceeded') || message.includes('over_email_send_rate_limit')) {
+        return mode === 'signup'
+            ? 'Supabase e-pastu limits ir sasniegts. Login ar paroli turpinas stradat, bet jaunam registracijam vajag SMTP vai izslegtu Confirm Email Supabase paneli.'
+            : 'Supabase e-pastu limits ir sasniegts. Ludzu izmantojiet pieslegsanos ar paroli un nelietojiet e-pasta saites.';
+    }
+
+    if (message.includes('email not confirmed')) {
+        return 'Sis konts vel nav apstiprinats ar e-pastu. Lai registracija darbotos bez e-pastiem, Supabase paneli vajadzes izslegt Confirm Email vai pieslegt SMTP.';
+    }
+
+    return error?.message || 'Autentifikacijas kluda.';
 }
 
 async function initializeAdminPage() {
@@ -1148,6 +1188,7 @@ async function initializeAdminPage() {
 
     if (!authUser) {
         renderAdminAccess(false);
+        setAdminStatus('Ievadiet admin e-pastu un paroli.');
         return;
     }
 
@@ -1207,7 +1248,7 @@ async function submitAdminLogin(event) {
         await loadAdminDashboard();
     } catch (error) {
         console.error('Admin login error:', error);
-        setAdminStatus(error.message || 'Admin pieslegsanas kluda.', true);
+        setAdminStatus(getReadableAuthError(error, 'login'), true);
     } finally {
         if (submitButton) {
             submitButton.disabled = false;

@@ -1305,22 +1305,33 @@ body.modal-open {
 
 .profile-menu-item {
     width: 100%;
-    border: none;
-    background: transparent;
+    border: 1px solid var(--border);
+    background: #ffffff;
     text-align: left;
     padding: 12px 14px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 14px;
     color: var(--text);
     cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.profile-menu-item + .profile-menu-item {
+    margin-top: 8px;
 }
 
 .profile-menu-item:hover {
-    background: #f3f4f6;
+    background: #f9fafb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
 }
 
 .profile-menu-item.danger {
     color: #991b1b;
+    border-color: #fecaca;
+    background: #fff7f7;
 }
 
 /* Auth page specific styles */
@@ -1353,6 +1364,13 @@ body.modal-open {
 
 .auth-helper {
     color: var(--text-muted);
+}
+
+.auth-helper-note {
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f9fafb;
+    border: 1px solid var(--border);
 }
 
 .auth-status.success {
@@ -1418,7 +1436,8 @@ body.modal-open {
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 18px;
-    background: #ffffff;
+    background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+    box-shadow: 0 10px 24px rgba(17, 24, 39, 0.06);
 }
 
 .reservation-card p {
