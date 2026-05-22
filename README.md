@@ -178,13 +178,13 @@ git push
 
 ## 📄 Licence
 
-MIT 2024 © Auria Hotels
+MIT 2024 © Viesnīcas rezervācija
 
 ---
 
 ## 📞 Kontakts
 
-- 📧 info@auria-hotels.lv
+- 📧 info@viesnicas-rezervacija.lv
 - 🐙 GitHub Issues
 - 🌐 viesnicas-rezervacija.lv
 
