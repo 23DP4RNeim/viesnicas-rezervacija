@@ -12,7 +12,6 @@ Moderņa un atsaucīga web aplikācija Latvijas un Eiropas viesnīcas numuriem. 
 -  **Viegli meklējams** - Filtrēšana pēc dāvanas, datuma, viesmīļu skaita
 -  **7 numur tipi** - Standarta, Deluxe, Ģimenes, Eksklusīvs, Romantisks, Okeāna skats, Spa
 -  **Pilna rezervācijas sistēma** - Online booking ar apstiprinājumu
--  **PWA atbalsts** - Instalējams uz sākuma ekrāna, darbojas bezsaistē
 -  **Tumšais režīms** - Automātiskais pārslēgums starp krāsu shēmām
 -  **Pieejams visiem** - WCAG 2.1 AA sertificēts, tastatūras navigācija
 -  **Draudzīgs un drošs** - OWASP vadlīnijas, XSS aizsardzība
