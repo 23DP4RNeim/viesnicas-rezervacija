@@ -1,6 +1,6 @@
-# 🏨 Viesnīcas Rezervācija - Viesnīcu numuru Booking Platforma
+#  Viesnīcas Rezervācija - Viesnīcu numuru Booking Platforma
 
-Moderņa un atsaucīga web aplikācija Latvijas un Eiropas viesnīcas numuriem. Izveidota ar HTML5, CSS3 un Vanilla JavaScript - bez sarežģītiem framework-u!
+Moderni un atsaucīgi priekš Latvijas un Eiropas viesnīcas numuriem. Izveidota ar HTML5, CSS3 un JavaScript.
 
 
 ---
@@ -13,9 +13,8 @@ Moderņa un atsaucīga web aplikācija Latvijas un Eiropas viesnīcas numuriem. 
 -  **7 numur tipi** - Standarta, Deluxe, Ģimenes, Eksklusīvs, Romantisks, Okeāna skats, Spa
 -  **Pilna rezervācijas sistēma** - Online booking ar apstiprinājumu
 -  **Tumšais režīms** - Automātiskais pārslēgums starp krāsu shēmām
+-  **Valodas maiņa** - Ļauj nomainīt valodu un angļu vai latviešu
 -  **Pieejams visiem** - WCAG 2.1 AA sertificēts, tastatūras navigācija
--  **Draudzīgs un drošs** - OWASP vadlīnijas, XSS aizsardzība
--  **Ātrs kā zibens** - Nav ārējiem serveru pieprasījumiem
 
 ---
 
@@ -117,14 +116,7 @@ localStorage.setItem('bookings', JSON.stringify(bookings));
 3. Main branch
 4. Gatavs! 
 ```
-
-### Netlify
-- Drag & drop mapi uz netlify.com
-- Automātiskais deploy 
-
 ### Tradicionālais Serveri
-```
-FTP upload → DNS → Gotovs!
 ```
 
 ---
@@ -138,7 +130,6 @@ python3 -m http.server 8000
 # Atveriet
 http://localhost:8000
 
-# PWA bezsaistē (F12 → Application → Service Workers → offline)
 ```
 
 ---
@@ -152,7 +143,6 @@ Sūtiet **GitHub Issues**:
 
 ---
 
-##  Ieguldījumi Vēlami!
 
 ```bash
 git checkout -b feature/nama-funkcionalitate
